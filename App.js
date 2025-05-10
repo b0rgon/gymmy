@@ -5,7 +5,8 @@ import AppLoading from 'expo-app-loading';
 import { fontsToLoad } from './constants/font_styles';
 import { useFonts } from '@expo-google-fonts/quicksand';
 import Colors from './constants/colors'
-import { LinearGradient } from 'expo-linear-gradient'
+import { NavigationContainer } from '@react-navigation/native';
+import Navigation from './src/navigation';
 
 export default function App() {
   const [fontsLoaded] = useFonts(fontsToLoad);
@@ -15,9 +16,9 @@ export default function App() {
   }
 
   return (
-  <LinearGradient style = {styles.container} colors={Colors.backgroundColor}>
-    <LoginScreen />
-  </LinearGradient>
+      // <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
+        <Navigation />
+      // </LinearGradient>
   );
 };
 

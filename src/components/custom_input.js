@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/AntDesign'
 const CustomInput = ({ value, setValue, placeholder, isPassword, iconName }) => {
   return (
     <View style={styles.container}>
-      <Icon name={iconName} size={18} color={Colors.mainTextColor}/>
+      <Icon name={iconName} size={18} color={Colors.mainTextColor} />
       <TextInput
         value={value}
         onChangeText={setValue}
@@ -15,7 +15,7 @@ const CustomInput = ({ value, setValue, placeholder, isPassword, iconName }) => 
         placeholderTextColor={Colors.mainTextColor}
         style={styles.input}
         secureTextEntry={isPassword}
-        />
+      />
     </View>
   )
 }
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   input: {
-    textAlignVertical:'center',
+    textAlignVertical: 'center',
     color: Colors.mainTextColor,
     fontFamily: Fonts.quicksandRegular,
     fontSize: 12,

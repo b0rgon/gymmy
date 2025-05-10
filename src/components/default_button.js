@@ -3,7 +3,9 @@ import React from 'react'
 import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
 
-const CustomButton = ({onPress, buttonText}) => {
+// 'Login', 'Continue' (signup) and 'Add exercise'
+
+const DefaultButton = ({ onPress, buttonText }) => {
     return (
         <Pressable onPress={onPress} style={styles.container}>
             <Text style={styles.text}>{buttonText}</Text>
@@ -17,6 +19,7 @@ const styles = StyleSheet.create({
         width: 320,
         padding: 15,
         marginVertical: 40,
+        marginBottom: 15,
         borderRadius: 10,
     },
     text: {
@@ -26,4 +29,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default CustomButton
+export default DefaultButton
