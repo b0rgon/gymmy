@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 const LoginScreen = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const { height } = useWindowDimensions();
@@ -30,11 +30,11 @@ const LoginScreen = () => {
         <Image source={GymmyLogo} style={[styles.logo, { height: height * 0.3 }]} resizeMode='contain'></Image>
         <Text style={[styles.mainText, { marginTop: 10 }]}>LOGIN TO YOUR ACCOUNT</Text>
         <Text style={[styles.secondaryText, { marginTop: 30, marginBottom: 60 }]}>Enter your login information</Text>
-        <View >
+        <View  >
           <CustomInput
             placeholder={'Enter your email'}
-            value={username}
-            setValue={setUsername}
+            value={email}
+            setValue={setEmail}
             iconName='mail' />
           <CustomInput
             placeholder={'Enter your password'}

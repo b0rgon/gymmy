@@ -16,16 +16,6 @@ export default function App() {
   }
 
   return (
-      // <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
-        <Navigation />
-      // </LinearGradient>
+    <Navigation />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-})

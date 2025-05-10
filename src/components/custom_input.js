@@ -12,7 +12,7 @@ const CustomInput = ({ value, setValue, placeholder, isPassword, iconName }) => 
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
-        placeholderTextColor={Colors.mainTextColor}
+        placeholderTextColor={Colors.secondaryTextColor}
         style={styles.input}
         secureTextEntry={isPassword}
       />
