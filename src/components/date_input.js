@@ -4,7 +4,7 @@ import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
 import Icon from 'react-native-vector-icons/AntDesign'
 
-const DateInput = ({ day, setDay, month, setMonth, year, setYear }) => {
+const DateInput = ({ day, setDay, month, setMonth, year, setYear, onChange }) => {
     return (
         <View style={styles.container}>
             <TextInput
@@ -32,7 +32,8 @@ const DateInput = ({ day, setDay, month, setMonth, year, setYear }) => {
                 keyboardType='number-pad'
                 maxLength={4}
                 value={year}
-                onChangeText={setYear} />
+                onChangeText={setYear}
+                onChange={onChange} />
         </View>
     )
 }
@@ -49,10 +50,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     dateInput: {
-        textAlignVertical: 'center',
         color: Colors.mainTextColor,
         fontFamily: Fonts.asapRegular,
-        fontSize: 12
+        fontSize: 12,
+        paddingTop: 6,
+        paddingBottom: 6
     },
     separator: {
         fontSize: 12,

@@ -57,7 +57,7 @@ const LoginScreen = () => {
             </Text>
           </View>
         </View>
-        <DefaultButton buttonText={'LOGIN'} onPress={onLoginPress} />
+        <DefaultButton buttonText={'Login'} onPress={onLoginPress} />
         <View style={styles.signUpRedirection}>
           <Text style={[styles.secondaryText, { fontSize: 12 }]}>Don't have an account?</Text>
           <Text style={[styles.secondaryText, { fontSize: 12 }, { marginLeft: 5 }, { color: Colors.secondaryColor }]}
