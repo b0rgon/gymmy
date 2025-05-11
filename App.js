@@ -1,20 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, SafeAreaViewBase, StyleSheet, Text, View } from 'react-native';
+import LoginScreen from './src/screens/login_screen';
+import AppLoading from 'expo-app-loading';
+import { fontsToLoad } from './constants/font_styles';
+import { useFonts } from '@expo-google-fonts/quicksand';
+import Colors from './constants/colors'
+import { NavigationContainer } from '@react-navigation/native';
+import Navigation from './src/navigation';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [fontsLoaded] = useFonts(fontsToLoad);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
+  return (
+    <Navigation />
+  );
+};
