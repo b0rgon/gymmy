@@ -3,12 +3,13 @@ import React, { useState } from 'react'
 import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
 import CustomInput from '../components/custom_input'
-import Icon from 'react-native-vector-icons/AntDesign'
 import DefaultButton from '../components/default_button'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import DateInput from '../components/date_input'
 import RadioButtonForm from '../components/radio_button_form'
+import axios from 'axios'
+import { Alert } from 'react-native'
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('');
@@ -27,11 +28,7 @@ const RegisterScreen = () => {
   const [year, setYear] = useState('');
 
   // gym experience years: 
-  const [selectedValue, setSelectedValue] = useState('N');
-
-  const onRegisterPress = () => {
-    navigation.navigate('Login');
-  }
+  const [gymExperience, setGymExperience] = useState('N');
 
   const onLoginPress = () => {
     navigation.navigate('Login');
@@ -84,6 +81,39 @@ const RegisterScreen = () => {
     }
   }
 
+  function register() {
+    if (!nameVerify || !emailVerify || !passwordVerify || !day || !month || !year || month > 12 || day > 31) {
+      Alert.alert('Error', 'Invalid fields.');
+      return;
+    }
+
+    // ToDo: validar os dias para cada mês do ano
+
+    const dateOfBirth = `${day}/${month}/${year}`;
+
+    const userData = {
+      name: name,
+      email: email,
+      dateOfBirth: dateOfBirth,
+      gymExperience: gymExperience,
+      password: password
+    }
+
+    axios.post('http://192.168.1.100:3000/register', userData)
+      .then(res => {
+        console.log(res.data)
+
+        if (res.data.status == "OK") {
+          Alert.alert(`"User ${name}" successfully registered. Redirecting you to Login`);
+          navigation.navigate('Login');
+        } else {
+          Alert.alert(JSON.stringify(res.data));
+        }
+
+      })
+      .catch(err => console.error(err))
+  }
+
   return (
     <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
       <View style={styles.root}>
@@ -129,8 +159,8 @@ const RegisterScreen = () => {
             {year.length < 1 ? null : yearVerify ? (null) : (
               setYear(''))}
           </View>
-          <RadioButtonForm selectedValue={selectedValue} setSelectedValue={setSelectedValue} />
-          <DefaultButton buttonText={'Continue'} onPress={onRegisterPress} />
+          <RadioButtonForm selectedValue={gymExperience} setSelectedValue={setGymExperience} />
+          <DefaultButton buttonText={'Continue'} onPress={() => register()} />
           <View style={styles.signUpRedirection}>
             <Text style={[styles.goToLogin, { fontSize: 12 }]}>Already have an account?</Text>
             <Text style={[styles.goToLogin, { fontSize: 12 }, { marginLeft: 5 }, { color: Colors.secondaryColor }]}
