@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, useWindowDimensions, Platform } from 'react-native'
+import { View, Text, Button, StyleSheet, useWindowDimensions, Platform, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
@@ -68,33 +68,37 @@ const RegisterScreen = () => {
     }
   }
 
-  function handleYear(e) {
-    // prevent user from entering future years
-    let currYear = new Date().getFullYear();
-    let yearInput = e.nativeEvent.text;
-    setYear(yearInput);
-    setYearVerify(false);
+  function isValidDate(day, month, year) {
+    const d = parseInt(day);
+    const m = parseInt(month);
+    const y = parseInt(year);
 
-    if (yearInput <= currYear) {
-      setYear(yearInput);
-      setYearVerify(true);
-    }
+    if (!d || !m || !y) return false;
+    if (y > new Date().getFullYear()) return false;
+
+    // verifica data válida
+    const date = new Date(y, m - 1, d);
+
+    return (
+      date.getFullYear() === y &&
+      date.getMonth() === m - 1 &&
+      date.getDate() === d
+    );
   }
 
-  function register() {
-    if (!nameVerify || !emailVerify || !passwordVerify || !day || !month || !year || month > 12 || day > 31) {
+  function Register() {
+    if (!nameVerify || !emailVerify || !passwordVerify || !isValidDate(day, month, year)) {
       Alert.alert('Error', 'Invalid fields.');
       return;
     }
 
-    // ToDo: validar os dias para cada mês do ano
-
-    const dateOfBirth = `${day}/${month}/${year}`;
+    // para não haver incongruências com o MongoDB
+    const dateOfBirthFixed = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
 
     const userData = {
       name: name,
       email: email,
-      dateOfBirth: dateOfBirth,
+      dateOfBirth: dateOfBirthFixed,
       gymExperience: gymExperience,
       password: password
     }
@@ -104,10 +108,10 @@ const RegisterScreen = () => {
         console.log(res.data)
 
         if (res.data.status == "OK") {
-          Alert.alert(`"User ${name}" successfully registered. Redirecting you to Login`);
+          Alert.alert('Success', `User successfully registered. Redirecting you to Login`);
           navigation.navigate('Login');
         } else {
-          Alert.alert(JSON.stringify(res.data));
+          Alert.alert('Error', res.data.data);
         }
 
       })
@@ -115,61 +119,60 @@ const RegisterScreen = () => {
   }
 
   return (
-    <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
-      <View style={styles.root}>
-        <Text style={[styles.mainText, { marginTop: 10 }, { marginBottom: 60 }]}>CREATE A NEW ACCOUNT</Text>
-        <View >
-          <CustomInput
-            placeholder={'Enter your email'}
-            value={email}
-            setValue={setEmail}
-            iconName='mail'
-            onChange={e => handleEmail(e)}
-          />
-          {email.length < 1 ? null : emailVerify ? (null) : (
-            <Text style={styles.validationError}>Invalid email.</Text>)}
-          <CustomInput
-            placeholder={'Enter your name'}
-            value={name}
-            setValue={setName}
-            iconName='user'
-            onChange={e => handleName(e)}
-          />
-          {name.length < 1 ? null : nameVerify ? (null) : (
-            <Text style={styles.validationError}>Name must have at least 1 character.</Text>)}
-          <CustomInput
-            placeholder={'Enter your password'}
-            value={password}
-            setValue={setPassword}
-            isPassword={true}
-            iconName='lock'
-            onChange={e => handlePassword(e)} />
-          {password.length < 1 ? null : passwordVerify ? (null) : (
-            <Text style={styles.validationError}>Password must have at least 5 characters.</Text>)}
-          <View style={styles.dateOfBirth}>
-            <Text style={[styles.secondaryText, { marginRight: 20 }, { fontSize: 12 }, { marginLeft: 15 }]} >Date of birth:</Text>
-            <DateInput
-              day={day}
-              setDay={setDay}
-              month={month}
-              setMonth={setMonth}
-              year={year}
-              setYear={setYear}
-              onChange={e => handleYear(e)} />
-            {year.length < 1 ? null : yearVerify ? (null) : (
-              setYear(''))}
-          </View>
-          <RadioButtonForm selectedValue={gymExperience} setSelectedValue={setGymExperience} />
-          <DefaultButton buttonText={'Continue'} onPress={() => register()} />
-          <View style={styles.signUpRedirection}>
-            <Text style={[styles.goToLogin, { fontSize: 12 }]}>Already have an account?</Text>
-            <Text style={[styles.goToLogin, { fontSize: 12 }, { marginLeft: 5 }, { color: Colors.secondaryColor }]}
-              onPress={onLoginPress} >Sign In
-            </Text>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
+      <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
+        <View style={styles.root}>
+          <Text style={[styles.mainText, { marginTop: 10 }, { marginBottom: 60 }]}>CREATE A NEW ACCOUNT</Text>
+          <View >
+            <CustomInput
+              placeholder={'Enter your email'}
+              value={email}
+              setValue={setEmail}
+              iconName='mail'
+              onChange={e => handleEmail(e)}
+            />
+            {email.length < 1 ? null : emailVerify ? (null) : (
+              <Text style={styles.validationError}>Invalid email.</Text>)}
+            <CustomInput
+              placeholder={'Enter your name'}
+              value={name}
+              setValue={setName}
+              iconName='user'
+              onChange={e => handleName(e)}
+            />
+            {name.length < 1 ? null : nameVerify ? (null) : (
+              <Text style={styles.validationError}>Name must have at least 1 character.</Text>)}
+            <CustomInput
+              placeholder={'Enter your password'}
+              value={password}
+              setValue={setPassword}
+              isPassword={true}
+              iconName='lock'
+              onChange={e => handlePassword(e)} />
+            {password.length < 1 ? null : passwordVerify ? (null) : (
+              <Text style={styles.validationError}>Password must have at least 5 characters.</Text>)}
+            <View style={styles.dateOfBirth}>
+              <Text style={[styles.secondaryText, { marginRight: 20 }, { fontSize: 12 }, { marginLeft: 15 }]} >Date of birth:</Text>
+              <DateInput
+                day={day}
+                setDay={setDay}
+                month={month}
+                setMonth={setMonth}
+                year={year}
+                setYear={setYear} />
+            </View>
+            <RadioButtonForm selectedValue={gymExperience} setSelectedValue={setGymExperience} />
+            <DefaultButton buttonText={'Continue'} onPress={() => Register()} />
+            <View style={styles.signUpRedirection}>
+              <Text style={[styles.goToLogin, { fontSize: 12 }]}>Already have an account?</Text>
+              <Text style={[styles.goToLogin, { fontSize: 12 }, { marginLeft: 5 }, { color: Colors.secondaryColor }]}
+                onPress={onLoginPress} >Sign In
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
-    </LinearGradient>
+      </LinearGradient>
+    </ScrollView>
   )
 }
 
