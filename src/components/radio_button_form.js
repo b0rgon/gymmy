@@ -7,18 +7,6 @@ import { RadioButton } from 'react-native-paper'
 const RadioButtonForm = ({ selectedValue, setSelectedValue }) => {
     const handleRadioBtnPress = (value) => {
         setSelectedValue(value);
-
-        switch (value) {
-            case 'N':
-                console.log('op1: Novice');
-                break;
-            case 'I':
-                console.log('op2: Intermediate');
-                break;
-            case 'A':
-                console.log('op3: Advanced');
-                break;
-        }
     }
 
     return (

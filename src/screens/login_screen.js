@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native'
+import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import GymmyLogo from '../../assets/icons/gymmy_logo.png'
 import Colors from '../../constants/colors'
@@ -8,6 +8,8 @@ import CheckBox from 'expo-checkbox';
 import DefaultButton from '../components/default_button'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
+import axios from 'axios'
+import { Alert } from 'react-native'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -16,8 +18,28 @@ const LoginScreen = () => {
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
-  const onLoginPress = () => {
+  function Login() {
+    if (!email || !password) {
+      Alert.alert('Error', 'Fill all the fields.');
+      return;
+    }
 
+    const userData = {
+      email: email,
+      password: password
+    }
+
+    axios.post('http://192.168.1.100:3000/login', userData)
+      .then(res => {
+        console.log(res.data);
+
+        if (res.data.status == "OK") {
+          navigation.navigate('Home');
+        } else {
+          Alert.alert('Error', res.data.data);
+        }
+      })
+      .catch(err => console.error(err))
   }
 
   const onSignUpPress = () => {
@@ -25,47 +47,49 @@ const LoginScreen = () => {
   }
 
   return (
-    <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
-      <View style={styles.root}>
-        <Image source={GymmyLogo} style={[styles.logo, { height: height * 0.3 }]} resizeMode='contain'></Image>
-        <Text style={[styles.mainText, { marginTop: 10 }]}>LOGIN TO YOUR ACCOUNT</Text>
-        <Text style={[styles.secondaryText, { marginTop: 30, marginBottom: 60 }]}>Enter your login information</Text>
-        <View  >
-          <CustomInput
-            placeholder={'Enter your email'}
-            value={email}
-            setValue={setEmail}
-            iconName='mail' />
-          <CustomInput
-            placeholder={'Enter your password'}
-            value={password}
-            setValue={setPassword}
-            isPassword={true}
-            iconName='lock' />
-          <View style={styles.chkBoxAndTextContainer}>
-            <View style={styles.rememberMe}>
-              <CheckBox
-                style={{ width: 16, height: 16 }}
-                value={rememberMe}
-                onValueChange={setRememberMe}
-                color={rememberMe ? Colors.secondaryColor : undefined} />
-              <Text style={[styles.secondaryText, { fontSize: 12 }, { marginLeft: 8 }]} >Remember me</Text>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
+      <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
+        <View style={styles.root}>
+          <Image source={GymmyLogo} style={[styles.logo, { height: height * 0.3 }]} resizeMode='contain'></Image>
+          <Text style={[styles.mainText, { marginTop: 10 }]}>LOGIN TO YOUR ACCOUNT</Text>
+          <Text style={[styles.secondaryText, { marginTop: 30, marginBottom: 60 }]}>Enter your login information</Text>
+          <View  >
+            <CustomInput
+              placeholder={'Enter your email'}
+              value={email}
+              setValue={setEmail}
+              iconName='mail' />
+            <CustomInput
+              placeholder={'Enter your password'}
+              value={password}
+              setValue={setPassword}
+              isPassword={true}
+              iconName='lock' />
+            <View style={styles.chkBoxAndTextContainer}>
+              <View style={styles.rememberMe}>
+                <CheckBox
+                  style={{ width: 16, height: 16 }}
+                  value={rememberMe}
+                  onValueChange={setRememberMe}
+                  color={rememberMe ? Colors.secondaryColor : undefined} />
+                <Text style={[styles.secondaryText, { fontSize: 12 }, { marginLeft: 8 }]} >Remember me</Text>
+              </View>
+              <Text style={[styles.secondaryText, , { fontSize: 12 }, { color: Colors.secondaryColor }]}
+                onPress={() => console.log('Forgot password: not implemented yet.')}
+              >Forgot my password
+              </Text>
             </View>
-            <Text style={[styles.secondaryText, , { fontSize: 12 }, { color: Colors.secondaryColor }]}
-              onPress={() => console.log('Forgot password: not implemented yet.')}
-            >Forgot my password
+          </View>
+          <DefaultButton buttonText={'Login'} onPress={() => Login()} />
+          <View style={styles.signUpRedirection}>
+            <Text style={[styles.secondaryText, { fontSize: 12 }]}>Don't have an account?</Text>
+            <Text style={[styles.secondaryText, { fontSize: 12 }, { marginLeft: 5 }, { color: Colors.secondaryColor }]}
+              onPress={onSignUpPress} >Sign Up
             </Text>
           </View>
         </View>
-        <DefaultButton buttonText={'Login'} onPress={onLoginPress} />
-        <View style={styles.signUpRedirection}>
-          <Text style={[styles.secondaryText, { fontSize: 12 }]}>Don't have an account?</Text>
-          <Text style={[styles.secondaryText, { fontSize: 12 }, { marginLeft: 5 }, { color: Colors.secondaryColor }]}
-            onPress={onSignUpPress} >Sign Up
-          </Text>
-        </View>
-      </View>
-    </LinearGradient>
+      </LinearGradient>
+    </ScrollView>
   )
 }
 

@@ -32,8 +32,7 @@ const DateInput = ({ day, setDay, month, setMonth, year, setYear, onChange }) =>
                 keyboardType='number-pad'
                 maxLength={4}
                 value={year}
-                onChangeText={setYear}
-                onChange={onChange} />
+                onChangeText={setYear} />
         </View>
     )
 }
