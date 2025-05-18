@@ -4,7 +4,7 @@ import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
 import Icon from 'react-native-vector-icons/AntDesign'
 
-const DateInput = ({ day, setDay, month, setMonth, year, setYear, onChange }) => {
+const DateInput = ({ day, setDay, month, setMonth, year, setYear }) => {
     return (
         <View style={styles.container}>
             <TextInput

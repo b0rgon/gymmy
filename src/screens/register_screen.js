@@ -20,7 +20,6 @@ const RegisterScreen = () => {
   const [emailVerify, setEmailVerify] = useState(false);
   const [nameVerify, setNameVerify] = useState(false);
   const [passwordVerify, setPasswordVerify] = useState(false);
-  const [yearVerify, setYearVerify] = useState(false);
 
   // dob variables:
   const [day, setDay] = useState('');
