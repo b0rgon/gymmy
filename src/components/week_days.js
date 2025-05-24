@@ -2,64 +2,43 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
-import { eachDayOfInterval, eachWeekOfInterval, subDays, addDays, format } from 'date-fns'
+import { eachDayOfInterval, subDays, format } from 'date-fns'
 
-const dates = eachWeekOfInterval(
+// últimos 7 dias, incluindo o atual
+const dates = eachDayOfInterval(
     {
-        // retorna todas as semanas entre estas 2 datas - no caso, a semana atual.
-        start: subDays(new Date(), 1),
-        end: addDays(new Date(), 0)
+        start: subDays(new Date(), 6),
+        end: new Date()
     },
     {
-        weekStartsOn: 1
+        weekStartsOn: 0
     }
-    // separa pelos dias desta semana
-).reduce((acc, cur) => {
-    const allDays = eachDayOfInterval({
-        start: cur,
-        end: addDays(cur, 6)
-    });
-
-    acc.push(allDays);
-
-    return acc;
-}, []);
+)
 
 const WeekDays = ({ selectedDay, setSelectedDay }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.label}>Your week:</Text>
-            {dates.map((week, i) => {
-                return (
-                    <View key={i}>
-                        <View style={styles.daysRow}>
-                            {week.map((day, j) => {
-                                let days = format(day, 'EEE');
-                                let daysNo = day.getDate();
+            <View style={styles.daysRow}>
+                {dates.map((day, i) => {
+                    const dayString = format(day, 'EEE');
+                    const dayNumber = day.getDate();
+                    const isSelected = selectedDay?.toDateString() === day.toDateString();
 
-                                let anySelected = selectedDay?.toDateString() === day.toDateString();
-
-                                return (
-                                    <TouchableOpacity
-                                        key={j}
-                                        onPress={() => setSelectedDay(day)}>
-
-                                        <View style={anySelected && styles.selectedDay}>
-                                            <Text style={[styles.days, anySelected && styles.selectedDayText]}>
-                                                {days}
-                                            </Text>
-
-                                            <Text style={[styles.daysNo, anySelected && styles.selectedDayText]}>
-                                                {daysNo}
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                );
-                            })}
-                        </View>
-                    </View>
-                )
-            })}
+                    return (
+                        <TouchableOpacity key={i} onPress={() => setSelectedDay(day)}>
+                            <View style={isSelected && styles.selectedDay}>
+                                <Text style={[styles.days, isSelected && styles.selectedDayText]}>
+                                    {dayString}
+                                </Text>
+                                <Text style={[styles.daysNo, isSelected && styles.selectedDayText]}>
+                                    {dayNumber}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    );
+                })}
+            </View>
         </View>
     )
 }

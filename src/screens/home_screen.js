@@ -11,9 +11,11 @@ import WeekDays from '../components/week_days'
 import TodaysWorkout from '../components/todays_workout'
 import PrevRecordedWorkout from '../components/prev_recorded_workout'
 import WeeklySummary from '../components/weekly_summary'
+import { daysInWeek } from 'date-fns/constants'
 
 const HomeScreen = () => {
   const [selectedDay, setSelectedDay] = useState(new Date()); // por defeito é a data de hoje.
+  const dayString = selectedDay.toLocaleDateString('en-US', {weekday: 'long'})
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
@@ -21,7 +23,7 @@ const HomeScreen = () => {
         <View style={styles.root}>
           <Text style={styles.welcomeText}>Welcome, Alexandre!</Text>
           <WeekDays selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
-          <Text style={styles.generalLabel}>Today's workout:</Text>
+          <Text style={styles.generalLabel}>{selectedDay.getDate() != new Date().getDate() ? dayString : 'Today'}'s workout:</Text>
           <TodaysWorkout />
           <Text style={styles.generalLabel}>Previously recorded workout:</Text>
           <PrevRecordedWorkout />

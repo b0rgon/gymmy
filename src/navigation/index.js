@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,13 +5,13 @@ import LoginScreen from '../screens/login_screen';
 import RegisterScreen from '../screens/register_screen'
 import HomeScreen from '../screens/home_screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import TrainingHistory from '../screens/training_history_screen';
+import TrainingHistory from '../screens/training_history';
 import Icon1 from 'react-native-vector-icons/Entypo'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
-import { StyleSheet } from 'react-native';
 import MyProfile from '../screens/profile_screen';
-import MyRoutines from '../screens/my_Routines_screen';
+import MyRoutines from '../screens/my_routines';
 import Colors from '../../constants/colors';
+import NewWorkout from '../screens/new_workout';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,6 +28,7 @@ const Navigation = () => {
     )
 }
 
+// apenas a Stack que usar o TabNavigator como componente terá o BottomTabNavigator.
 const TabNavigator = () => {
     return (
         <Tab.Navigator
@@ -44,8 +44,8 @@ const TabNavigator = () => {
                 tabBarInactiveTintColor: Colors.secondaryColor
             }}>
             <Tab.Screen
-                name="Home"
-                component={HomeScreen}
+                name="HomeTab"
+                component={HomeStack}
                 options={{
                     title: 'Home',
                     tabBarIcon: ({ focused }) => (
@@ -95,5 +95,15 @@ const TabNavigator = () => {
         </Tab.Navigator>
     )
 }
+
+// todos os diferentes ecrãs que posso aceder dentro do Home Screen
+const HomeStack = () => {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="NewWorkout" component={NewWorkout} />
+        </Stack.Navigator>
+    );
+};
 
 export default Navigation

@@ -3,12 +3,17 @@ import React from 'react'
 import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
 import Icon from 'react-native-vector-icons/AntDesign'
+import { useNavigation } from '@react-navigation/native'
+import NewWorkout from '../screens/new_workout'
 
 const TodaysWorkout = () => {
+
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
             <Text style={styles.label}>No workouts recorded today. Tap the button to get started!</Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NewWorkout')}>
                 <Icon name='pluscircle' size={35} style={styles.iconAdd} color={Colors.mainTextColor} />
             </TouchableOpacity>
         </View>
