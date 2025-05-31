@@ -7,10 +7,32 @@ import ConfirmButton from '../components/confirm_button'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Fonts from '../../constants/font_styles'
 import DefaultRoundSquareButton from '../components/default_round_square_button'
+import CopyLastWorkout from '../components/copy_last_workout'
+import MyRoutinesForm from '../components/my_routines_form'
+
+const setConditionalView = (selectedBtn, selectedRoutine, setSelectedRoutine, routinesCount) => {
+    switch (selectedBtn) {
+        case 'COPY':
+            return (
+                <CopyLastWorkout />
+            )
+        case 'CHOOSE':
+            return (
+                <MyRoutinesForm
+                    routinesCount={routinesCount} />
+            )
+        case 'SCRATCH':
+            return (
+                <Text style={styles.chooseMethodLabel}>{selectedBtn}</Text>
+            )
+    }
+}
 
 const NewWorkout = () => {
 
     const [selectedBtn, setSelectedBtn] = useState('SCRATCH');
+    const [selectedRoutine, setSelectedRoutine] = useState(0);
+    const routinesCount = 3;
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
@@ -45,8 +67,7 @@ const NewWorkout = () => {
                             setSelectedBtn={setSelectedBtn}
                         />
                     </View>
-                    <Text style={styles.chooseMethodLabel}>{selectedBtn}</Text>
-
+                    {setConditionalView(selectedBtn, selectedRoutine, setSelectedRoutine, routinesCount)}
 
                 </View>
             </LinearGradient>
@@ -85,6 +106,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 25
+    },
+    previousWorkoutLabel: {
+        color: Colors.secondaryTextColor,
+        fontFamily: Fonts.asapRegular,
+        fontSize: 18
     }
 })
 
