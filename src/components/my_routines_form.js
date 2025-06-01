@@ -1,29 +1,28 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import Colors from '../../constants/colors'
-import Fonts, { fontsToLoad } from '../../constants/font_styles'
+import Fonts from '../../constants/font_styles'
 import DefaultRoundSquareButton from './default_round_square_button'
 
-const printRoutines = (routinesCount) => {
-    var loop = [];
-
-    for (let i = 0; i < routinesCount; i++) {
-        loop.push(
-            <DefaultRoundSquareButton key={i} text={i} />
-        )
-    }
-
-    return (
-        loop
-    )
+const printRoutines = (routines, selectedRoutine, setSelectedRoutine) => {
+    return routines.map((routine, i) => (
+        <DefaultRoundSquareButton
+            id={i}
+            key={i}
+            text={routine}
+            subtext={routine}
+            selectedBtn={selectedRoutine}
+            setSelectedBtn={setSelectedRoutine}
+        />
+    ));
 }
 
-const MyRoutinesForm = ({ routinesCount }) => {
+const MyRoutinesForm = ({ routines, selectedRoutine, setSelectedRoutine }) => {
     return (
         <View style={{ marginTop: 40 }}>
             <Text style={styles.label}>My routines:</Text>
             <View style={styles.routines}>
-                {printRoutines(routinesCount)}
+                {printRoutines(routines, selectedRoutine, setSelectedRoutine)}
             </View>
         </View>
     )

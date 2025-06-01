@@ -10,7 +10,7 @@ import DefaultRoundSquareButton from '../components/default_round_square_button'
 import CopyLastWorkout from '../components/copy_last_workout'
 import MyRoutinesForm from '../components/my_routines_form'
 
-const setConditionalView = (selectedBtn, selectedRoutine, setSelectedRoutine, routinesCount) => {
+const setConditionalView = (selectedBtn, selectedRoutine, setSelectedRoutine, routines) => {
     switch (selectedBtn) {
         case 'COPY':
             return (
@@ -19,7 +19,9 @@ const setConditionalView = (selectedBtn, selectedRoutine, setSelectedRoutine, ro
         case 'CHOOSE':
             return (
                 <MyRoutinesForm
-                    routinesCount={routinesCount} />
+                    routines={routines}
+                    selectedRoutine={selectedRoutine}
+                    setSelectedRoutine={setSelectedRoutine} />
             )
         case 'SCRATCH':
             return (
@@ -32,7 +34,7 @@ const NewWorkout = () => {
 
     const [selectedBtn, setSelectedBtn] = useState('SCRATCH');
     const [selectedRoutine, setSelectedRoutine] = useState(0);
-    const routinesCount = 3;
+    const routines = ["Push", "Pull", "Legs"];
 
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
@@ -41,7 +43,10 @@ const NewWorkout = () => {
                     <View style={styles.header}>
                         <BackButton />
                         <Text style={styles.headerLabel}>New workout</Text>
-                        <ConfirmButton />
+                        <ConfirmButton
+                            selectedBtn={selectedBtn}
+                            selectedRoutine={selectedRoutine}
+                        />
                     </View>
                     <Text style={styles.chooseMethodLabel}>Choose a method</Text>
                     <View style={styles.methods}>
@@ -67,8 +72,7 @@ const NewWorkout = () => {
                             setSelectedBtn={setSelectedBtn}
                         />
                     </View>
-                    {setConditionalView(selectedBtn, selectedRoutine, setSelectedRoutine, routinesCount)}
-
+                    {setConditionalView(selectedBtn, selectedRoutine, setSelectedRoutine, routines)}
                 </View>
             </LinearGradient>
         </ScrollView>

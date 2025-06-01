@@ -12,6 +12,7 @@ import MyProfile from '../screens/profile_screen';
 import MyRoutines from '../screens/my_routines';
 import Colors from '../../constants/colors';
 import NewWorkout from '../screens/new_workout';
+import WorkoutLive from '../screens/workout_live';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,6 +24,7 @@ const Navigation = () => {
                 {/* <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="SignUp" component={RegisterScreen} /> */}
                 <Stack.Screen name="Home" component={TabNavigator} />
+                <Stack.Screen name="WorkoutLive" component={WorkoutLive} />
             </Stack.Navigator>
         </NavigationContainer>
     )

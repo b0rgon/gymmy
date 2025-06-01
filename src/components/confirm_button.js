@@ -3,12 +3,24 @@ import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Colors from '../../constants/colors'
 
-const ConfirmButton = () => {
+const ConfirmButton = ({ selectedBtn, selectedRoutine }) => {
 
     const navigation = useNavigation();
 
+    function onContinueClick(selectedBtn, selectedRoutine) {
+        if (selectedBtn != 'CHOOSE') {
+            selectedRoutine = "";
+        }
+
+        let workoutTitle = selectedRoutine === "" ? selectedBtn : selectedRoutine
+
+        navigation.navigate('WorkoutLive', {
+            title: workoutTitle
+        });
+    }
+
     return (
-        <TouchableOpacity onPress={() => console.log('Confirm: not implemented yet.')}>
+        <TouchableOpacity onPress={() => onContinueClick(selectedBtn, selectedRoutine)}>
             <Icon
                 name='check'
                 size={40}
