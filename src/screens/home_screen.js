@@ -11,7 +11,6 @@ import WeekDays from '../components/week_days'
 import TodaysWorkout from '../components/todays_workout'
 import PrevRecordedWorkout from '../components/prev_recorded_workout'
 import WeeklySummary from '../components/weekly_summary'
-import { daysInWeek } from 'date-fns/constants'
 
 const HomeScreen = () => {
   const [selectedDay, setSelectedDay] = useState(new Date()); // por defeito é a data de hoje.

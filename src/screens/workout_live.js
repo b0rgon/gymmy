@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 import Colors from '../../constants/colors'
-import BackButton from '../components/back_button'
+import BackButton from '../components/buttons/back_button'
 import Fonts from '../../constants/font_styles'
 import Icon from 'react-native-vector-icons/FontAwesome6'
-import RestTimer from '../components/rest_timer'
-import ExerciseController from '../components/exercise_controller'
+import RestTimer from '../components/timers/rest_timer'
+import ExerciseController from '../components/page_components/exercise_controller'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const WorkoutLive = ({ route }) => {
@@ -18,8 +18,12 @@ const WorkoutLive = ({ route }) => {
 
     const [seconds, setSeconds] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
+    // apenas para testes:
     const [weightIncrement, setWeightIncrement] = useState(0);
     const [repIncrement, setRepIncrement] = useState(0);
+
+    // com dados reais: 
+    const [exercises, setExercises] = useState([]);
     const [isPr, setIsPr] = useState(false);
 
     useEffect(() => {

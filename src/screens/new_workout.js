@@ -2,13 +2,13 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import Colors from '../../constants/colors'
 import { LinearGradient } from 'expo-linear-gradient'
-import BackButton from '../components/back_button'
-import ConfirmButton from '../components/confirm_button'
+import BackButton from '../components/buttons/back_button'
+import ConfirmButton from '../components/buttons/confirm_button'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Fonts from '../../constants/font_styles'
-import DefaultRoundSquareButton from '../components/default_round_square_button'
-import CopyLastWorkout from '../components/copy_last_workout'
-import MyRoutinesForm from '../components/my_routines_form'
+import DefaultRoundSquareButton from '../components/buttons/default_round_square_button'
+import CopyLastWorkout from '../components/page_components/copy_last_workout'
+import MyRoutinesForm from '../components/page_components/my_routines_form'
 
 const setConditionalView = (selectedBtn, selectedRoutine, setSelectedRoutine, routines) => {
     switch (selectedBtn) {

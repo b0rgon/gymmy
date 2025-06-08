@@ -1,8 +1,7 @@
 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
-
-import Colors from '../../constants/colors'
+import Colors from '../../../constants/colors'
 import Fonts from '../../constants/font_styles'
 import Icon from 'react-native-vector-icons/FontAwesome6'
 

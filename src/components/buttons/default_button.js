@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import Colors from '../../constants/colors'
-import Fonts from '../../constants/font_styles'
+import Colors from '../../../constants/colors'
+import Fonts from '../../../constants/font_styles'
 
 // 'Login', 'Continue' (signup) and 'Add exercise'
 
