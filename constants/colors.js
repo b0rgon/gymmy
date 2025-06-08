@@ -6,7 +6,7 @@ const Colors = {
     saveBtnColor: '#438662',
     deleteBtnColor: '#741C1C',
     secondaryColorWithOpacity:`rgba(96,94,161,0.2)`,
-    secondaryColorButWithMoreOpacity:`rgba(96,94,161,0.45)`
+    secondaryColorButWithMoreOpacity:`rgba(96,94,161, 0.5)`
 }
 
 export default Colors;

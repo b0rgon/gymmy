@@ -8,6 +8,7 @@ import Fonts from '../../constants/font_styles'
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import RestTimer from '../components/rest_timer'
 import ExerciseController from '../components/exercise_controller'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const WorkoutLive = ({ route }) => {
 
@@ -17,6 +18,9 @@ const WorkoutLive = ({ route }) => {
 
     const [seconds, setSeconds] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
+    const [weightIncrement, setWeightIncrement] = useState(0);
+    const [repIncrement, setRepIncrement] = useState(0);
+    const [isPr, setIsPr] = useState(false);
 
     useEffect(() => {
         let interval = null;
@@ -50,7 +54,7 @@ const WorkoutLive = ({ route }) => {
     };
 
     return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
+        <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps={'always'}>
             <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
                 <View style={styles.root}>
                     <View style={styles.header}>
@@ -72,20 +76,26 @@ const WorkoutLive = ({ route }) => {
                     </View>
                     <View style={{ alignItems: 'flex-end' }}>
                         <TouchableOpacity style={styles.addExerciseBtn}>
-                            <Text style={styles.addExerciseBtnText}>Add exercise</Text>
+                            <Text style={styles.addExerciseBtnText}
+                                onPress={() => console.log('Add exercise: not implemented yet.')}>Add exercise</Text>
                         </TouchableOpacity>
                     </View>
-                    <ExerciseController />
+                    <ExerciseController exerciseCount={1}
+                        setsCount={1}
+                        weightIncrement={weightIncrement}
+                        setWeightIncrement={setWeightIncrement}
+                        repIncrement={repIncrement}
+                        setRepIncrement={setRepIncrement}
+                        isPr={isPr}
+                        setIsPr={setIsPr}
+                    />
+
                 </View>
-
-
-
-
                 <View style={styles.buttonView}>
                     <TouchableOpacity onPress={handleTimer}>
                         <Icon
                             name={isRunning ? 'circle-pause' : 'circle-play'}
-                            size={60}
+                            size={50}
                             color={Colors.secondaryColor}
                             style={{ textAlign: 'center' }}
                         />
@@ -94,14 +104,17 @@ const WorkoutLive = ({ route }) => {
                 </View>
             </LinearGradient>
         </ScrollView>
-
     )
 }
 const styles = StyleSheet.create({
+    scrollContent: {
+        flexGrow: 1
+    },
     container: {
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
+        paddingBottom: 30
     },
     root: {
         padding: 70,
