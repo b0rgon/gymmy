@@ -1,7 +1,7 @@
 import { TouchableOpacity, } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/AntDesign'
-import Colors from '../../constants/colors'
+import Colors from '../../../constants/colors'
 
 const BackButton = () => {
 

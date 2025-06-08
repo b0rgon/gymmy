@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import Colors from '../../constants/colors'
-import Fonts from '../../constants/font_styles'
+import Colors from '../../../constants/colors'
+import Fonts from '../../../constants/font_styles'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
-import NewWorkout from '../screens/new_workout'
+import NewWorkout from '../../screens/new_workout'
 
 const TodaysWorkout = () => {
 

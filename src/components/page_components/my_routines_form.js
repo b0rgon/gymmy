@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import Colors from '../../constants/colors'
-import Fonts from '../../constants/font_styles'
-import DefaultRoundSquareButton from './default_round_square_button'
+import Colors from '../../../constants/colors'
+import Fonts from '../../../constants/font_styles'
+import DefaultRoundSquareButton from '../buttons/default_round_square_button'
 
 const printRoutines = (routines, selectedRoutine, setSelectedRoutine) => {
     return routines.map((routine, i) => (
