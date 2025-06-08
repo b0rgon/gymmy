@@ -7,7 +7,7 @@ import { ScreenStackHeaderBackButtonImage } from 'react-native-screens'
 import SetController from './set_controller'
 import { Asap_400Regular } from '@expo-google-fonts/asap'
 
-const ExerciseController = ({ exerciseCount, setsCount, weightIncrement, setWeightIncrement, repIncrement, setRepIncrement, isPr, setIsPr }) => {
+const ExerciseController = ({ exercise, exerciseIndex, updateSet  }) => {
     return (
         <View>
             <View style={styles.bar}>
@@ -18,7 +18,7 @@ const ExerciseController = ({ exerciseCount, setsCount, weightIncrement, setWeig
                         color={Colors.secondaryTextColor}
                     />
                 </TouchableOpacity>
-                <Text style={styles.exerciseName}>Hack squat</Text>
+                <Text style={styles.exerciseName}>{exercise.name}</Text>
                 <TouchableOpacity style={styles.iconsPosition}>
                     <Icon
                         name={'calendar'}
@@ -27,13 +27,13 @@ const ExerciseController = ({ exerciseCount, setsCount, weightIncrement, setWeig
                     />
                 </TouchableOpacity>
             </View>
-            <SetController weightIncrement={weightIncrement}
-                setWeightIncrement={setWeightIncrement}
-                repIncrement={repIncrement}
-                setRepIncrement={setRepIncrement}
-                isPr={isPr}
-                setIsPr={setIsPr}
-            />
+            {exercise.sets.map((set, setIndex) => (
+                <SetController
+                    key={setIndex}
+                    setData={set}
+                    onUpdate={(field, value) => updateSet(exercise.Id, setIndex, field, value)}
+                />
+            ))}
             <ExerciseAddDel />
         </View>
     )

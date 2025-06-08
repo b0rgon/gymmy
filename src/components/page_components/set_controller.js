@@ -7,75 +7,57 @@ import IconFontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { id } from 'date-fns/locale'
 
-const SetController = ({ weightIncrement, setWeightIncrement, repIncrement, setRepIncrement, isPr, setIsPr }) => {
+const SetController = ({ setData, onUpdate }) => {
+
+    const handleWeightIncrement = (value) => {
+        onUpdate('weight', Math.max(0, setData.weight + value));
+    };
+
+    const handleRepIncrement = (value) => {
+        onUpdate('reps', Math.max(1, setData.reps + value));
+    };
 
     return (
         <View>
             <View style={styles.area}>
-                <WeightController weightIncrement={weightIncrement}
-                    setWeightIncrement={setWeightIncrement}
-                    text={'kg'} />
-                <RepController repIncrement={repIncrement}
-                    setRepIncrement={setRepIncrement}
-                    text={'reps'} />
-                <IconGroup />
+                <View style={styles.incrementerArea}>
+                    <TouchableOpacity onPress={() => handleWeightIncrement(-2.5)}>
+                        <Icon
+                            name={'minus'}
+                            size={16}
+                            color={Colors.secondaryColor}
+                        />
+                    </TouchableOpacity>
+                    <Text style={styles.incrementerValue}>{setData.weight} kg</Text>
+                    <TouchableOpacity onPress={() => handleWeightIncrement(2.5)}>
+                        <Icon
+                            name={'plus'}
+                            size={16}
+                            color={Colors.secondaryColor}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.incrementerArea}>
+                    <TouchableOpacity onPress={() => handleRepIncrement(-1)}>
+                        <Icon
+                            name={'minus'}
+                            size={16}
+                            color={Colors.secondaryColor}
+                        />
+                    </TouchableOpacity>
+                    <Text style={styles.incrementerValue}>{setData.reps} reps</Text>
+                    <TouchableOpacity onPress={() => handleRepIncrement(1)}>
+                        <Icon
+                            name={'plus'}
+                            size={16}
+                            color={Colors.secondaryColor}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <IconGroup isPr={setData.isPr} />
             </View>
             <View style={styles.separator}>
             </View>
-        </View>
-    )
-}
-
-const WeightController = ({ text, weightIncrement, setWeightIncrement }) => {
-
-    const handleWeightIncrement = (value) => {
-        setWeightIncrement(prev => Math.max(0, prev + value))
-    }
-
-    return (
-        <View style={styles.incrementerArea}>
-            <TouchableOpacity onPress={() => handleWeightIncrement(-2.5)}>
-                <Icon
-                    name={'minus'}
-                    size={16}
-                    color={Colors.secondaryColor}
-                />
-            </TouchableOpacity>
-            <Text style={styles.incrementerValue}>{weightIncrement} {text}</Text>
-            <TouchableOpacity onPress={() => handleWeightIncrement(2.5)}>
-                <Icon
-                    name={'plus'}
-                    size={16}
-                    color={Colors.secondaryColor}
-                />
-            </TouchableOpacity>
-        </View>
-    )
-}
-
-const RepController = ({ text, repIncrement, setRepIncrement }) => {
-
-    const handleWeightIncrement = (value) => {
-        setRepIncrement(prev => Math.max(0, prev + value))
-    }
-
-    return (
-        <View style={styles.incrementerArea}>
-            <TouchableOpacity onPress={() => handleWeightIncrement(-1)}>
-                <Icon
-                    name={'minus'}
-                    size={16}
-                    color={Colors.secondaryColor}
-                />
-            </TouchableOpacity>
-            <Text style={styles.incrementerValue}>{repIncrement} {text}</Text>
-            <TouchableOpacity onPress={() => handleWeightIncrement(1)}>
-                <Icon
-                    name={'plus'}
-                    size={16}
-                    color={Colors.secondaryColor}
-                />
-            </TouchableOpacity>
         </View>
     )
 }
@@ -86,7 +68,7 @@ const IconGroup = ({ isPr }) => {
             <IconFontAwesome5
                 name={'trophy'}
                 size={16}
-                color={'goldenrod'}
+                color={isPr ? 'goldenrod' : 'transparent'}
             />
             <TouchableOpacity style={{ paddingHorizontal: 8 }}>
                 <IconMaterialIcons
@@ -105,6 +87,19 @@ const IconGroup = ({ isPr }) => {
         </View>
     )
 }
+
+/*
+{isPassword && (
+        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <Icon
+            name={showPassword ? 'eye' : 'eyeo'}
+            size={18}
+            color={Colors.secondaryColor}
+            style={{ marginLeft: 8 }}
+          />
+        </TouchableOpacity>
+      )}
+        */
 
 const styles = StyleSheet.create({
     area: {

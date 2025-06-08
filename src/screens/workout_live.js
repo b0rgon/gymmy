@@ -8,7 +8,7 @@ import Fonts from '../../constants/font_styles'
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import RestTimer from '../components/timers/rest_timer'
 import ExerciseController from '../components/page_components/exercise_controller'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { mockExercises } from '../../mock_tests/mockExercises'
 
 const WorkoutLive = ({ route }) => {
 
@@ -18,13 +18,9 @@ const WorkoutLive = ({ route }) => {
 
     const [seconds, setSeconds] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
-    // apenas para testes:
-    const [weightIncrement, setWeightIncrement] = useState(0);
-    const [repIncrement, setRepIncrement] = useState(0);
 
-    // com dados reais: 
-    const [exercises, setExercises] = useState([]);
-    const [isPr, setIsPr] = useState(false);
+    // mock tests:
+    const [exercises, setExercises] = useState(mockExercises);
 
     useEffect(() => {
         let interval = null;
@@ -57,6 +53,22 @@ const WorkoutLive = ({ route }) => {
         setIsRunning(prev => !prev);
     };
 
+    const updateSet = (exerciseId, setIndex, field, value) => {
+        setExercises(prevExercises =>
+            prevExercises.map(ex =>
+                ex.Id === exerciseId
+                    ? {
+                        ...ex,
+                        sets: ex.sets.map((set, i) =>
+                            i === setIndex ? { ...set, [field]: value } : set
+                        )
+                    }
+                    : ex
+            )
+        );
+    };
+
+
     return (
         <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps={'always'}>
             <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
@@ -84,15 +96,15 @@ const WorkoutLive = ({ route }) => {
                                 onPress={() => console.log('Add exercise: not implemented yet.')}>Add exercise</Text>
                         </TouchableOpacity>
                     </View>
-                    <ExerciseController exerciseCount={1}
-                        setsCount={1}
-                        weightIncrement={weightIncrement}
-                        setWeightIncrement={setWeightIncrement}
-                        repIncrement={repIncrement}
-                        setRepIncrement={setRepIncrement}
-                        isPr={isPr}
-                        setIsPr={setIsPr}
-                    />
+
+                    {exercises.map((exercise, index) => (
+                        <ExerciseController
+                            key={exercise.Id}
+                            exercise={exercise}
+                            exerciseIndex={index}
+                            updateSet={updateSet}
+                        />
+                    ))}
 
                 </View>
                 <View style={styles.buttonView}>
