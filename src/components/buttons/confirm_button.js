@@ -8,7 +8,7 @@ const ConfirmButton = ({ selectedBtn, selectedRoutine }) => {
     const navigation = useNavigation();
 
     function onContinueClick(selectedBtn, selectedRoutine) {
-        if (selectedBtn != 'CHOOSE') {
+        if (selectedBtn == 'SCRATCH') {
             selectedRoutine = "";
         }
 

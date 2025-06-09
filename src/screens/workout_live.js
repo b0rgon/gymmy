@@ -13,16 +13,18 @@ const WorkoutLive = ({ route }) => {
 
     const navigation = useNavigation();
 
-    const { loadedRoutine } = route.params || {};
-
-    console.log(loadedRoutine)
+    const loadedRoutine = route.params.routine || {};
 
     const [seconds, setSeconds] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
+    const [exercises, setExercises] = useState([]);
 
-    // mock tests:
-    const [exercises, setExercises] = useState(loadedRoutine?.exercises || []);
-    
+    useEffect(() => {
+        if (loadedRoutine?.exercises) {
+            setExercises(loadedRoutine.exercises);
+        }
+    }, [loadedRoutine]);
+
     useEffect(() => {
         let interval = null;
 
@@ -76,7 +78,7 @@ const WorkoutLive = ({ route }) => {
                 <View style={styles.root}>
                     <View style={styles.header}>
                         <BackButton />
-                        <Text style={styles.title}>aaa</Text>
+                        <Text style={styles.title}>{loadedRoutine.name}</Text>
                         <Text style={styles.finish}
                             onPress={() => console.log('Finish workout: not implemented yet.')}>Finish
                         </Text>
@@ -98,11 +100,10 @@ const WorkoutLive = ({ route }) => {
                         </TouchableOpacity>
                     </View>
 
-                    {exercises.map((exercise, index) => (
+                    {exercises.map((exercise) => (
                         <ExerciseController
                             key={exercise.id}
                             exercise={exercise}
-                            exerciseIndex={index}
                             updateSet={updateSet}
                         />
                     ))}

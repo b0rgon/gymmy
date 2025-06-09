@@ -7,7 +7,7 @@ import { ScreenStackHeaderBackButtonImage } from 'react-native-screens'
 import SetController from './set_controller'
 import { Asap_400Regular } from '@expo-google-fonts/asap'
 
-const ExerciseController = ({ exercise, exerciseIndex, updateSet  }) => {
+const ExerciseController = ({ exercise, updateSet  }) => {
     return (
         <View>
             <View style={styles.bar}>

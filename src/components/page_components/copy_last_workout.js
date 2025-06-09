@@ -3,25 +3,21 @@ import React from 'react'
 import Colors from '../../../constants/colors'
 import Fonts, { fontsToLoad } from '../../../constants/font_styles'
 
-const CopyLastWorkout = () => {
+const CopyLastWorkout = ({ lastWorkout }) => {
     return (
         <View style={{ marginTop: 40 }}>
             <Text style={styles.label}>Previous workout:</Text>
-            <View style={{ marginTop: 15 }}>
-                <Text style={styles.title}>Lower Day B:</Text>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={styles.list}>{`\u2022`} Hack squat:</Text>
-                    <Text style={styles.sets}>2 sets;</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={styles.list}>{`\u2022`} Seated Leg Curl:</Text>
-                    <Text style={styles.sets}>2 sets;</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                    <Text style={styles.list}>{`\u2022`} Leg Extension:</Text>
-                    <Text style={styles.sets}>3 sets;</Text>
-                </View>
-            </View>
+            <Text style={styles.title}>{lastWorkout.name}:</Text>
+            {
+                lastWorkout.exercises.map((exercise) => (
+                    <View>
+                        <View style={{ flexDirection: 'row', paddingBottom:4 }}>
+                            <Text style={styles.list}>{exercise.name}:</Text>
+                            <Text style={styles.sets}>{exercise.sets.length} set(s)</Text>
+                        </View>
+                    </View>
+                ))
+            }
         </View>
     )
 }
@@ -36,19 +32,22 @@ const styles = StyleSheet.create({
         color: Colors.mainTextColor,
         fontFamily: Fonts.quicksandBold,
         marginBottom: 6,
+        marginTop: 20,
         fontSize: 15
     },
     list: {
         color: Colors.mainTextColor,
         fontSize: 14,
         paddingTop: 4,
+        paddingLeft: 10,
         fontFamily: Fonts.asapBold
     },
     sets: {
         color: Colors.mainTextColor,
         fontSize: 14,
-        paddingTop: 4,
-        paddingLeft: 6
+        paddingTop: 3,
+        paddingLeft: 6,
+        fontFamily: Fonts.quicksandRegular
     }
 })
 
