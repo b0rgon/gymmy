@@ -9,6 +9,7 @@ import Fonts from '../../constants/font_styles'
 import DefaultRoundSquareButton from '../components/buttons/default_round_square_button'
 import CopyLastWorkout from '../components/page_components/copy_last_workout'
 import MyRoutinesForm from '../components/page_components/my_routines_form'
+import { mockRoutines } from '../../mock_tests/mockRoutines'
 
 const setConditionalView = (selectedBtn, selectedRoutine, setSelectedRoutine, routines) => {
     switch (selectedBtn) {
@@ -34,48 +35,48 @@ const NewWorkout = () => {
 
     const [selectedBtn, setSelectedBtn] = useState('SCRATCH');
     const [selectedRoutine, setSelectedRoutine] = useState(0);
-    const routines = ["Push", "Pull", "Legs"];
+    const routines = mockRoutines;
 
     return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
-            <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
-                <View style={styles.root}>
-                    <View style={styles.header}>
-                        <BackButton />
-                        <Text style={styles.headerLabel}>New workout</Text>
-                        <ConfirmButton
-                            selectedBtn={selectedBtn}
-                            selectedRoutine={selectedRoutine}
-                        />
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
+                <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
+                    <View style={styles.root}>
+                        <View style={styles.header}>
+                            <BackButton />
+                            <Text style={styles.headerLabel}>New workout</Text>
+                            <ConfirmButton
+                                selectedBtn={selectedBtn}
+                                selectedRoutine={routines.find(r => r.id === selectedRoutine)}
+                            />
+                        </View>
+                        <Text style={styles.chooseMethodLabel}>Choose a method</Text>
+                        <View style={styles.methods}>
+                            <DefaultRoundSquareButton
+                                id='COPY'
+                                text='Copy last workout'
+                                subtext='No data found.' // o subtext aqui vão ser dados da bd
+                                selectedBtn={selectedBtn}
+                                setSelectedBtn={setSelectedBtn}
+                            />
+                            <DefaultRoundSquareButton
+                                id='CHOOSE'
+                                text='Choose from My Routines'
+                                subtext="I want to choose from the templates I've created"
+                                selectedBtn={selectedBtn}
+                                setSelectedBtn={setSelectedBtn}
+                            />
+                            <DefaultRoundSquareButton
+                                id='SCRATCH'
+                                text='Add as I go'
+                                subtext='I wanna start from scratch.'
+                                selectedBtn={selectedBtn}
+                                setSelectedBtn={setSelectedBtn}
+                            />
+                        </View>
+                        {setConditionalView(selectedBtn, selectedRoutine, setSelectedRoutine, routines)}
                     </View>
-                    <Text style={styles.chooseMethodLabel}>Choose a method</Text>
-                    <View style={styles.methods}>
-                        <DefaultRoundSquareButton
-                            id='COPY'
-                            text='Copy last workout'
-                            subtext='No data found.' // o subtext aqui vão ser dados da bd
-                            selectedBtn={selectedBtn}
-                            setSelectedBtn={setSelectedBtn}
-                        />
-                        <DefaultRoundSquareButton
-                            id='CHOOSE'
-                            text='Choose from My Routines'
-                            subtext="I want to choose from the templates I've created"
-                            selectedBtn={selectedBtn}
-                            setSelectedBtn={setSelectedBtn}
-                        />
-                        <DefaultRoundSquareButton
-                            id='SCRATCH'
-                            text='Add as I go'
-                            subtext='I wanna start from scratch.'
-                            selectedBtn={selectedBtn}
-                            setSelectedBtn={setSelectedBtn}
-                        />
-                    </View>
-                    {setConditionalView(selectedBtn, selectedRoutine, setSelectedRoutine, routines)}
-                </View>
-            </LinearGradient>
-        </ScrollView>
+                </LinearGradient>
+            </ScrollView>
     )
 }
 

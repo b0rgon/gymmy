@@ -12,11 +12,7 @@ const ConfirmButton = ({ selectedBtn, selectedRoutine }) => {
             selectedRoutine = "";
         }
 
-        let workoutTitle = selectedRoutine === "" ? selectedBtn : selectedRoutine
-
-        navigation.navigate('WorkoutLive', {
-            title: workoutTitle
-        });
+        navigation.navigate('WorkoutLive', { routine: selectedRoutine });
     }
 
     return (

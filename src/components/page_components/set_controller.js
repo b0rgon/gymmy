@@ -88,19 +88,6 @@ const IconGroup = ({ isPr }) => {
     )
 }
 
-/*
-{isPassword && (
-        <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-          <Icon
-            name={showPassword ? 'eye' : 'eyeo'}
-            size={18}
-            color={Colors.secondaryColor}
-            style={{ marginLeft: 8 }}
-          />
-        </TouchableOpacity>
-      )}
-        */
-
 const styles = StyleSheet.create({
     area: {
         height: 45,

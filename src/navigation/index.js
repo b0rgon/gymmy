@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator();
 const Navigation = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Navigator screenOptions={{ headerShown: false, }}>
                 {/* <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="SignUp" component={RegisterScreen} /> */}
                 <Stack.Screen name="Home" component={TabNavigator} />
@@ -37,7 +37,7 @@ const TabNavigator = () => {
             screenOptions={{
                 headerShown: false,
                 tabBarStyle: {
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#060723',
                     borderTopWidth: 0,
                     elevation: 0,
                     position: 'absolute'

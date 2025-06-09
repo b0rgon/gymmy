@@ -1,6 +1,6 @@
 export const mockExercises = [
     {
-        Id: 1,
+        id: 1,
         name: 'Bench Press',
         sets: [
             { weight: 110, reps: 8, isPr: false },
@@ -9,7 +9,7 @@ export const mockExercises = [
         notes: ''
     },
     {
-        Id: 2,
+        id: 2,
         name: 'Squat',
         sets: [
             { weight: 120, reps: 5, isPr: true },
@@ -19,7 +19,7 @@ export const mockExercises = [
         notes: 'agachamento'
     },
     {
-        Id: 3,
+        id: 3,
         name: 'Deadlift',
         sets: [
             { weight: 200, reps: 3, isPr: true },

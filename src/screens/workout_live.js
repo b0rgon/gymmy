@@ -8,20 +8,21 @@ import Fonts from '../../constants/font_styles'
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import RestTimer from '../components/timers/rest_timer'
 import ExerciseController from '../components/page_components/exercise_controller'
-import { mockExercises } from '../../mock_tests/mockExercises'
 
 const WorkoutLive = ({ route }) => {
 
     const navigation = useNavigation();
 
-    const { title } = route.params;
+    const { loadedRoutine } = route.params || {};
+
+    console.log(loadedRoutine)
 
     const [seconds, setSeconds] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
 
     // mock tests:
-    const [exercises, setExercises] = useState(mockExercises);
-
+    const [exercises, setExercises] = useState(loadedRoutine?.exercises || []);
+    
     useEffect(() => {
         let interval = null;
 
@@ -29,7 +30,8 @@ const WorkoutLive = ({ route }) => {
             interval = setInterval(() => {
                 setSeconds(prev => prev + 1);
             }, 1000);
-        } else {
+        }
+        else {
             clearInterval(interval);
         }
 
@@ -56,7 +58,7 @@ const WorkoutLive = ({ route }) => {
     const updateSet = (exerciseId, setIndex, field, value) => {
         setExercises(prevExercises =>
             prevExercises.map(ex =>
-                ex.Id === exerciseId
+                ex.id === exerciseId
                     ? {
                         ...ex,
                         sets: ex.sets.map((set, i) =>
@@ -68,14 +70,13 @@ const WorkoutLive = ({ route }) => {
         );
     };
 
-
     return (
         <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps={'always'}>
             <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
                 <View style={styles.root}>
                     <View style={styles.header}>
                         <BackButton />
-                        <Text style={styles.title}>{title}</Text>
+                        <Text style={styles.title}>aaa</Text>
                         <Text style={styles.finish}
                             onPress={() => console.log('Finish workout: not implemented yet.')}>Finish
                         </Text>
@@ -99,7 +100,7 @@ const WorkoutLive = ({ route }) => {
 
                     {exercises.map((exercise, index) => (
                         <ExerciseController
-                            key={exercise.Id}
+                            key={exercise.id}
                             exercise={exercise}
                             exerciseIndex={index}
                             updateSet={updateSet}
@@ -122,6 +123,7 @@ const WorkoutLive = ({ route }) => {
         </ScrollView>
     )
 }
+
 const styles = StyleSheet.create({
     scrollContent: {
         flexGrow: 1

@@ -5,16 +5,24 @@ import Fonts from '../../../constants/font_styles'
 import DefaultRoundSquareButton from '../buttons/default_round_square_button'
 
 const printRoutines = (routines, selectedRoutine, setSelectedRoutine) => {
-    return routines.map((routine, i) => (
-        <DefaultRoundSquareButton
-            id={i}
-            key={i}
-            text={routine}
-            subtext={routine}
-            selectedBtn={selectedRoutine}
-            setSelectedBtn={setSelectedRoutine}
-        />
-    ));
+    return routines.map((routine) => {
+
+        let routineSummary = routine.exercises
+            .map(ex => `${ex.name}: ${ex.sets.length} set(s)`)
+            .join(';\n\n')
+
+        return (
+            <DefaultRoundSquareButton
+                id={routine.id}
+                key={routine.id}
+                text={routine.name}
+                subtext={routineSummary}
+                selectedBtn={selectedRoutine}
+                setSelectedBtn={setSelectedRoutine}
+                horizontal={true}
+            />
+        );
+    });
 }
 
 const MyRoutinesForm = ({ routines, selectedRoutine, setSelectedRoutine }) => {
@@ -30,15 +38,13 @@ const MyRoutinesForm = ({ routines, selectedRoutine, setSelectedRoutine }) => {
 
 const styles = StyleSheet.create({
     routines: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 25
+        marginTop: 20,
+        alignItems: 'center'
     },
     label: {
         color: Colors.secondaryTextColor,
         fontFamily: Fonts.asapRegular,
-        fontSize: 18
+        fontSize: 18,
     },
 })
 

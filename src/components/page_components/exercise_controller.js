@@ -31,7 +31,7 @@ const ExerciseController = ({ exercise, exerciseIndex, updateSet  }) => {
                 <SetController
                     key={setIndex}
                     setData={set}
-                    onUpdate={(field, value) => updateSet(exercise.Id, setIndex, field, value)}
+                    onUpdate={(field, value) => updateSet(exercise.id, setIndex, field, value)}
                 />
             ))}
             <ExerciseAddDel />
