@@ -61,7 +61,7 @@ const NewWorkout = () => {
                         <DefaultRoundSquareButton
                             id='COPY'
                             text='Copy last workout'
-                            subtext='No data found.' // o subtext aqui vão ser dados da bd
+                            subtext='No data found.'
                             selectedBtn={selectedBtn}
                             setSelectedBtn={handleSelectedBtn}
                         />

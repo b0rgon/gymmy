@@ -10,7 +10,7 @@ const CopyLastWorkout = ({ lastWorkout }) => {
             <Text style={styles.title}>{lastWorkout.name}:</Text>
             {
                 lastWorkout.exercises.map((exercise) => (
-                    <View>
+                    <View key={exercise.id}>
                         <View style={{ flexDirection: 'row', paddingBottom:4 }}>
                             <Text style={styles.list}>{exercise.name}:</Text>
                             <Text style={styles.sets}>{exercise.sets.length} set(s)</Text>
