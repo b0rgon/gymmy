@@ -17,13 +17,8 @@ const WorkoutLive = ({ route }) => {
 
     const [seconds, setSeconds] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
-    const [exercises, setExercises] = useState([]);
-
-    useEffect(() => {
-        if (loadedRoutine?.exercises) {
-            setExercises(loadedRoutine.exercises);
-        }
-    }, [loadedRoutine]);
+    const [exercises, setExercises] = useState(loadedRoutine.exercises);
+    const [changedExercises, setChangedExercises] = useState(new Set())
 
     useEffect(() => {
         let interval = null;
@@ -58,8 +53,8 @@ const WorkoutLive = ({ route }) => {
     };
 
     const updateSet = (exerciseId, setIndex, field, value) => {
-        setExercises(prevExercises =>
-            prevExercises.map(ex =>
+        setExercises(prevExercises => {
+            let updated = prevExercises.map(ex =>
                 ex.id === exerciseId
                     ? {
                         ...ex,
@@ -68,8 +63,28 @@ const WorkoutLive = ({ route }) => {
                         )
                     }
                     : ex
-            )
-        );
+            );
+
+            // comparar com o original
+            // 'loadedRoutine.exercises' mantem-se sempre igual, logo a comparação é feita aqui
+            const updatedExercise = updated.find(e => e.id === exerciseId);
+            const originalExercise = loadedRoutine.exercises.find(e => e.id === exerciseId);
+
+            const noChanges = JSON.stringify(updatedExercise.sets) === JSON.stringify(originalExercise.sets);
+
+            setChangedExercises(prev => {
+                const next = new Set(prev);
+                if (noChanges) {
+                    next.delete(exerciseId);
+                } 
+                else {
+                    next.add(exerciseId);
+                }
+                return next;
+            });
+
+            return updated;
+        });
     };
 
     return (
@@ -105,6 +120,7 @@ const WorkoutLive = ({ route }) => {
                             key={exercise.id}
                             exercise={exercise}
                             updateSet={updateSet}
+                            hasChanges={changedExercises.has(exercise.id)}
                         />
                     ))}
 

@@ -120,7 +120,7 @@ const SetController = ({ setData, onUpdate }) => {
                             style={styles.dialogInputText}
                         />
                         <View style={styles.buttonsView}>
-                            <TouchableOpacity style={[styles.dialogButton, { backgroundColor: Colors.secondaryColor }]}>
+                            <TouchableOpacity style={[styles.dialogButton, { backgroundColor: Colors.saveBtnColor }]}>
                                 <Text style={styles.dialogBtnText}
                                     onPress={saveNote}>Save</Text>
                             </TouchableOpacity>

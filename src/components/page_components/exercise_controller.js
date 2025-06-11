@@ -7,7 +7,7 @@ import { ScreenStackHeaderBackButtonImage } from 'react-native-screens'
 import SetController from './set_controller'
 import { Asap_400Regular } from '@expo-google-fonts/asap'
 
-const ExerciseController = ({ exercise, updateSet  }) => {
+const ExerciseController = ({ exercise, updateSet, hasChanges }) => {
     return (
         <View>
             <View style={styles.bar}>
@@ -34,23 +34,26 @@ const ExerciseController = ({ exercise, updateSet  }) => {
                     onUpdate={(field, value) => updateSet(exercise.id, setIndex, field, value)}
                 />
             ))}
-            <ExerciseAddDel />
+            <ExerciseAddDel updating={hasChanges}/>
         </View>
     )
 }
 
-const ExerciseAddDel = () => {
+const ExerciseAddDel = ({ updating }) => {
     return (
         <View style={styles.exerciseAddDel}>
             <TouchableOpacity >
                 <Icon name='pluscircle' size={30} color={Colors.secondaryColor} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.deleteButton}>
-                <Text style={styles.labelDelete}>Delete exercise</Text>
-            </TouchableOpacity>
+            {updating && (
+                <TouchableOpacity style={styles.labelArea}>
+                    <Text style={styles.labelSave}>Save changes</Text>
+                </TouchableOpacity>
+            )}
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     bar: {
@@ -71,22 +74,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     exerciseAddDel: {
-        height: 60,
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative',
+        marginTop: 8,
+        marginBottom: 14
     },
-    labelDelete: {
-        color: Colors.secondaryColor,
-        fontFamily: Fonts.asapRegular,
-        fontSize: 12,
-    },
-    deleteButton: {
+    labelArea: {
         position: 'absolute',
         right: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },
+    labelSave: {
+        fontFamily: Fonts.quicksandBold,
+        fontSize: 12,
+        color: Colors.saveBtnColor,
+    }
 })
 
 
