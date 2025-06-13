@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
-import Colors from '../../constants/colors'
-import Fonts from '../../constants/font_styles'
+import Colors from '../../../constants/colors'
+import Fonts from '../../../constants/font_styles'
 import { RadioButton } from 'react-native-paper'
 
 const RadioButtonForm = ({ selectedValue, setSelectedValue }) => {

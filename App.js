@@ -7,6 +7,7 @@ import { useFonts } from '@expo-google-fonts/quicksand';
 import Colors from './constants/colors'
 import { NavigationContainer } from '@react-navigation/native';
 import Navigation from './src/navigation';
+import { AuthProvider } from './src/context/auth_context';
 
 export default function App() {
   const [fontsLoaded] = useFonts(fontsToLoad);
@@ -16,6 +17,8 @@ export default function App() {
   }
 
   return (
-    <Navigation />
+    <AuthProvider>
+      <Navigation />
+    </AuthProvider>
   );
 };
