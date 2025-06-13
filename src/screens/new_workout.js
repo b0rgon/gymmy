@@ -7,10 +7,10 @@ import ConfirmButton from '../components/buttons/confirm_button'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Fonts from '../../constants/font_styles'
 import DefaultRoundSquareButton from '../components/buttons/default_round_square_button'
-import CopyLastWorkout from '../components/page_components/copy_last_workout'
 import MyRoutinesForm from '../components/page_components/my_routines_form'
 import { mockRoutines } from '../../mock_tests/mockRoutines'
 import { mockLastWorkout } from '../../mock_tests/mockLastWorkout'
+import WorkoutInfo from '../components/page_components/workout_info'
 
 const NewWorkout = () => {
 
@@ -23,8 +23,15 @@ const NewWorkout = () => {
         switch (selectedBtn) {
             case 'COPY':
                 return (
-                    <CopyLastWorkout
-                        lastWorkout={lastWorkout} />
+                    <View style={{ marginTop: 40 }}>
+                        <Text style={{
+                            color: Colors.secondaryTextColor,
+                            fontFamily: Fonts.asapRegular,
+                            fontSize: 18,
+                        }}>Last workout:</Text>
+                        <WorkoutInfo
+                            workout={lastWorkout} />
+                    </View>
                 )
             case 'CHOOSE':
                 return (
@@ -41,6 +48,9 @@ const NewWorkout = () => {
 
         if (btn != 'CHOOSE') {
             setSelectedRoutine(0)
+        }
+        else if (selectedRoutine === 0) {
+            setSelectedRoutine(1)
         }
     }
 

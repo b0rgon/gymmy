@@ -13,7 +13,7 @@ const WorkoutLive = ({ route }) => {
 
     const navigation = useNavigation();
 
-    const loadedRoutine = route.params.routine || {};
+    const loadedRoutine = route.params?.routine || {};
 
     const [seconds, setSeconds] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
@@ -76,7 +76,7 @@ const WorkoutLive = ({ route }) => {
                 const next = new Set(prev);
                 if (noChanges) {
                     next.delete(exerciseId);
-                } 
+                }
                 else {
                     next.add(exerciseId);
                 }
@@ -99,9 +99,20 @@ const WorkoutLive = ({ route }) => {
                         </Text>
                     </View>
                     <View style={styles.timersHeader}>
-                        <View>
+                        <View >
                             <Text style={styles.workoutDuration}>Workout duration:</Text>
                             <Text style={styles.timer}>{Timer(seconds)}</Text>
+                            <View style={styles.buttonView}>
+                                <TouchableOpacity onPress={handleTimer}>
+                                    <Icon
+                                        name={isRunning ? 'pause' : 'play'}
+                                        size={40}
+                                        color={Colors.secondaryTextColor}
+                                        style={{textAlign: 'center'}}
+                                    />
+                                    <Text style={styles.buttonText}>{isRunning ? 'Pause' : 'GO!'}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                         <View>
                             <Text style={styles.timerLabel}>Rest timer:</Text>
@@ -114,8 +125,7 @@ const WorkoutLive = ({ route }) => {
                                 onPress={() => console.log('Add exercise: not implemented yet.')}>Add exercise</Text>
                         </TouchableOpacity>
                     </View>
-
-                    {exercises.map((exercise) => (
+                    {exercises?.map((exercise) => (
                         <ExerciseController
                             key={exercise.id}
                             exercise={exercise}
@@ -124,17 +134,6 @@ const WorkoutLive = ({ route }) => {
                         />
                     ))}
 
-                </View>
-                <View style={styles.buttonView}>
-                    <TouchableOpacity onPress={handleTimer}>
-                        <Icon
-                            name={isRunning ? 'circle-pause' : 'circle-play'}
-                            size={50}
-                            color={Colors.secondaryColor}
-                            style={{ textAlign: 'center' }}
-                        />
-                        <Text style={styles.buttonText}>{isRunning ? 'Pause' : 'GO!'}</Text>
-                    </TouchableOpacity>
                 </View>
             </LinearGradient>
         </ScrollView>
@@ -184,8 +183,8 @@ const styles = StyleSheet.create({
         marginTop: 25,
         fontFamily: Fonts.asapRegular,
         fontSize: 16,
-        color: Colors.secondaryTextColor,
-        textAlign: 'center' // decidir center ou right
+        color: Colors.mainTextColor,
+        textAlign: 'center'
     },
     timer: {
         marginTop: 6,
@@ -194,17 +193,11 @@ const styles = StyleSheet.create({
         color: Colors.secondaryTextColor,
     },
     buttonView: {
-        position: 'absolute',
-        bottom: 25,
-        left: 0,
-        right: 0,
-        alignItems: 'center'
-    },
-    buttonStart: {
-        color: Colors.secondaryColor
+        alignItems: 'center',
+        marginTop: 10
     },
     buttonText: {
-        color: Colors.secondaryColor,
+        color: Colors.mainTextColor,
         fontSize: 14,
         fontFamily: Fonts.asapRegular,
         textAlign: 'center'
@@ -213,7 +206,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.secondaryColor,
         width: 120,
         padding: 6,
-        marginTop: 30,
+        marginTop: 14,
         marginBottom: 15,
         borderRadius: 10,
     },

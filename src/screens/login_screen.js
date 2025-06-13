@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import GymmyLogo from '../../assets/icons/gymmy_logo.png'
 import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import axios from 'axios'
 import { Alert } from 'react-native'
+import { AuthContext } from '../context/auth_context';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +18,7 @@ const LoginScreen = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
+  const { setUser } = useContext(AuthContext);
 
   function Login() {
     if (!email || !password) {
@@ -34,6 +36,7 @@ const LoginScreen = () => {
         console.log(res.data);
 
         if (res.data.status == "OK") {
+          setUser(res.data.user); // guarda o utilizador autenticado
           navigation.navigate('Home');
         } else {
           Alert.alert('Error', res.data.data);

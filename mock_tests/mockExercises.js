@@ -3,27 +3,23 @@ export const mockExercises = [
         id: 1,
         name: 'Bench Press',
         sets: [
-            { weight: 110, reps: 8, isPr: false },
-            { weight: 100, reps: 5, isPr: false }
+            { id: 98, weight: 110, reps: 8, isPr: true, setNotes: '' },
+            { id: 99, weight: 100, reps: 6, isPr: false, setNotes: '' },
         ],
-        notes: ''
     },
     {
         id: 2,
         name: 'Squat',
         sets: [
-            { weight: 120, reps: 5, isPr: true },
-            { weight: 110, reps: 4, isPr: false },
-            { weight: 100, reps: 4, isPr: false }
+            { id: 197, weight: 110, reps: 6, isPr: true, setNotes: 'Com spot.' },
+            { id: 198, weight: 100, reps: 6, isPr: false, setNotes: '' },
         ],
-        notes: 'agachamento'
     },
     {
         id: 3,
         name: 'Deadlift',
         sets: [
-            { weight: 200, reps: 3, isPr: true },
+            { id: 33, weight: 150, reps: 3, isPr: true, setNotes: '' },
         ],
-        notes: ''
     }
 ];

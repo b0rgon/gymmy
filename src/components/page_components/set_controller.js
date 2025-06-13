@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     dialog: {
-        backgroundColor: 'gainsboro',
+        backgroundColor: '#171b48',
         padding: 20,
         width: '70%',
         outlineColor: Colors.secondaryColor,
@@ -178,18 +178,19 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.asapBold,
         paddingBottom: 10,
         fontSize: 16,
-
+        color: 'gainsboro'
     },
     dialogInputText: {
         height: 100,
-        borderColor: 'black',
+        borderColor: Colors.secondaryColor,
         borderWidth: 1,
         padding: 10,
         textAlignVertical: 'top',
         marginBottom: 10,
         fontFamily: Fonts.asapRegular,
-        color: 'black',
-        fontSize: 14
+        color: Colors.secondaryTextColor,
+        fontSize: 14,
+        borderRadius: 10
     },
     buttonsView: {
         flexDirection: 'row',
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
     },
     dialogBtnText: {
         fontFamily: Fonts.asapRegular,
-        color: 'gainsboro',
+        color: Colors.mainTextColor,
         textAlign: 'center'
     }
 })
