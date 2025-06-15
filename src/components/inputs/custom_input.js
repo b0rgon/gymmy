@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import Colors from '../../constants/colors'
-import Fonts from '../../constants/font_styles'
+import Colors from '../../../constants/colors'
+import Fonts from '../../../constants/font_styles'
 import Icon from 'react-native-vector-icons/AntDesign'
 
 const CustomInput = ({ value, setValue, placeholder, isPassword, iconName, onChange }) => {
