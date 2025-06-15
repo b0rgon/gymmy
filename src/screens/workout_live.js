@@ -15,7 +15,7 @@ const WorkoutLive = ({ route }) => {
 
     const loadedRoutine = route.params?.routine || {};
 
-    const [seconds, setSeconds] = useState(0);
+    const [seconds, setSeconds] = useState(loadedRoutine.duration * 60 || 0);
     const [isRunning, setIsRunning] = useState(false);
     const [exercises, setExercises] = useState(loadedRoutine.exercises);
     const [changedExercises, setChangedExercises] = useState(new Set())
@@ -102,22 +102,26 @@ const WorkoutLive = ({ route }) => {
                         <View >
                             <Text style={styles.workoutDuration}>Workout duration:</Text>
                             <Text style={styles.timer}>{Timer(seconds)}</Text>
-                            <View style={styles.buttonView}>
-                                <TouchableOpacity onPress={handleTimer}>
-                                    <Icon
-                                        name={isRunning ? 'pause' : 'play'}
-                                        size={40}
-                                        color={Colors.secondaryTextColor}
-                                        style={{textAlign: 'center'}}
-                                    />
-                                    <Text style={styles.buttonText}>{isRunning ? 'Pause' : 'GO!'}</Text>
-                                </TouchableOpacity>
+                            {!loadedRoutine.duration &&
+                                <View style={styles.buttonView}>
+                                    <TouchableOpacity onPress={handleTimer}>
+                                        <Icon
+                                            name={isRunning ? 'pause' : 'play'}
+                                            size={40}
+                                            color={Colors.secondaryTextColor}
+                                            style={{ textAlign: 'center' }}
+                                        />
+                                        <Text style={styles.buttonText}>{isRunning ? 'Pause' : 'GO!'}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            }
+                        </View>
+                        {!loadedRoutine.duration &&
+                            <View>
+                                <Text style={styles.timerLabel}>Rest timer:</Text>
+                                <RestTimer />
                             </View>
-                        </View>
-                        <View>
-                            <Text style={styles.timerLabel}>Rest timer:</Text>
-                            <RestTimer />
-                        </View>
+                        }
                     </View>
                     <View style={{ alignItems: 'flex-end' }}>
                         <TouchableOpacity style={styles.addExerciseBtn}>

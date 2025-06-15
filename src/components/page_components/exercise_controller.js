@@ -34,12 +34,13 @@ const ExerciseController = ({ exercise, updateSet, hasChanges }) => {
                     onUpdate={(field, value) => updateSet(exercise.id, setIndex, field, value)}
                 />
             ))}
-            <ExerciseAddDel updating={hasChanges}/>
+            <AddOrSaveExercise
+                updating={hasChanges} />
         </View>
     )
 }
 
-const ExerciseAddDel = ({ updating }) => {
+const AddOrSaveExercise = ({ updating }) => {
     return (
         <View style={styles.exerciseAddDel}>
             <TouchableOpacity >

@@ -4,6 +4,7 @@ const mockWorkouts = [
         date: '2025-06-09',
         name: 'Push',
         notes: 'Feeling strong today!',
+        duration: 54,
         exercises: [
             {
                 id: 1,
@@ -36,6 +37,7 @@ const mockWorkouts = [
         date: '2025-06-10',
         name: 'Pull',
         notes: '',
+        duration: 43,
         exercises: [
             {
                 id: 343,
@@ -54,14 +56,6 @@ const mockWorkouts = [
                 ],
             },
             {
-                id: 801,
-                name: 'Lat pulldown',
-                sets: [
-                    { id: 28, weight: 70, reps: 6, isPr: true, setNotes: '' },
-                    { id: 29, weight: 65, reps: 6, isPr: false, setNotes: '' }
-                ],
-            },
-            {
                 id: 407,
                 name: 'Hammer Curls',
                 sets: [
@@ -77,6 +71,7 @@ const mockWorkouts = [
         date: '2025-06-12',
         name: 'Legs',
         notes: 'Hoje treinei pernas.',
+        duration: 66,
         exercises: [
             {
                 id: 2,
@@ -110,6 +105,7 @@ const mockWorkouts = [
         date: '2025-06-13',
         name: 'Upper',
         notes: 'upper dayy !!',
+        duration: 71,
         exercises: [
             {
                 id: 1001,

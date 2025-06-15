@@ -8,7 +8,7 @@ const WorkoutInfo = ({ workout }) => {
     if (workout) {
         return (
             <View>
-                <Text style={styles.title}>{workout.name}:</Text>
+                <Text style={styles.title}>{workout.name}</Text>
                 {
                     workout.exercises.map((exercise) => (
                         <View key={exercise.id}>
@@ -19,6 +19,7 @@ const WorkoutInfo = ({ workout }) => {
                         </View>
                     ))
                 }
+                {workout.duration && <Text style={styles.workoutDuration}>Duration: {workout.duration}min</Text>}
             </View>
         )
     }
@@ -27,7 +28,6 @@ const WorkoutInfo = ({ workout }) => {
             <View>
                 <Text style={styles.label}>No data found</Text>
             </View>
-
         )
     }
 }
@@ -60,7 +60,13 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.quicksandBold,
         paddingTop: 5,
         paddingLeft: 5
-    }
+    },
+    workoutDuration: {
+        fontSize: 12,
+        color: Colors.secondaryTextColor,
+        fontFamily: Fonts.asapBold,
+        paddingTop: 5
+    },
 })
 
 export default WorkoutInfo

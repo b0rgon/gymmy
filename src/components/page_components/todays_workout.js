@@ -14,17 +14,21 @@ const TodaysWorkout = ({ todaysWorkout }) => {
     return (
         <View style={styles.container}>
             {todaysWorkout ? (
-                <WorkoutInfo workout={todaysWorkout} />
-
+                <TouchableOpacity onPress={() => navigation.navigate('WorkoutLive', { routine: todaysWorkout })}>
+                    <WorkoutInfo workout={todaysWorkout} />
+                </TouchableOpacity>
             ) : (
                 <View >
                     <Text style={styles.label}>No workouts recorded today. Tap the button to get started!</Text>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('NewWorkout')}>
-                        <Icon name='pluscircle' size={35} style={styles.iconAdd} color={Colors.mainTextColor} />
-                    </TouchableOpacity>
+                    <View style={styles.btnArea} >
+                        <TouchableOpacity onPress={() => navigation.navigate('NewWorkout')}>
+                            <Icon name='pluscircle' size={35} style={styles.iconAdd} color={Colors.mainTextColor} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            )}
-        </View>
+            )
+            }
+        </View >
     )
 }
 
@@ -49,9 +53,9 @@ const styles = StyleSheet.create({
     iconAdd: {
         color: Colors.secondaryColor
     },
-    button: {
+    btnArea: {
         alignItems: 'center',
-        paddingTop: 15
+        paddingTop: 10,
     }
 })
 

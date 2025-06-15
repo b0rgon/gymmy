@@ -19,27 +19,50 @@ const HomeScreen = () => {
   const dayString = selectedDay.toLocaleDateString('en-US', { weekday: 'long' })
   const loggedUser = useContext(AuthContext); // para ter acesso ao utilizador autenticado
 
-  let todaysDate = selectedDay.toISOString().split('T')[0]
+  let selectedDate = selectedDay.toISOString().split('T')[0]
 
   // obter workout do dia selecionado + anteriores:
 
-  const workoutBySelectedDay = mockWorkouts.find(w => w.date === todaysDate)
+  const workoutBySelectedDay = mockWorkouts.find(w => w.date === selectedDate)
   // ordenar por ordem decrescente de data e guardar o index do mais recente
-  const sortedWorkouts = [...mockWorkouts].sort((a, b) => new Date(b.date) - new Date(a.date))
-  const selectedDayIndex = sortedWorkouts.findIndex(w => w.date === todaysDate)
-  const previousWorkout = selectedDayIndex !== -1 && sortedWorkouts[selectedDayIndex + 1]
+  const sortedWorkouts = [...mockWorkouts].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  var previousWorkout
+
+  // se houver treino naquele dia, o treino anterior é o treino do índice atual + 1 
+  // caso contrário, o treino anterior é o treino cuja data seja inferior à data atual
+  if (workoutBySelectedDay) {
+    let i = sortedWorkouts.findIndex(w => w.date === selectedDate)
+    previousWorkout = sortedWorkouts[i + 1] || null
+  }
+  else {
+    previousWorkout = sortedWorkouts.find(w => w.date < selectedDate) || null
+  }
+
+  const navigation = useNavigation();
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
       <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
         <View style={styles.root}>
-          <Text style={styles.welcomeText}>Welcome, {!(loggedUser.name) ? '(undefined)' : loggedUser.name}!</Text>
+          <Text style={styles.welcomeText}>Welcome, {loggedUser.name ?? 'undefined'}!</Text>
           <WeekDays selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
           <Text style={styles.generalLabel}>{selectedDay.getDate() != new Date().getDate() ? dayString : 'Today'}'s workout:</Text>
           <TodaysWorkout todaysWorkout={workoutBySelectedDay} />
           <Text style={styles.generalLabel}>Previously recorded workout:</Text>
           <View style={styles.prevWorkoutView}>
-            <WorkoutInfo workout={previousWorkout} />
+            {previousWorkout ?
+              (
+                <TouchableOpacity onPress={() => navigation.navigate('WorkoutLive', { routine: previousWorkout })}>
+                  <WorkoutInfo workout={previousWorkout} />
+                  <Text style={styles.lastWorkout}>Recorded at {previousWorkout.date}</Text>
+                </TouchableOpacity>
+              )
+              :
+              (
+                <WorkoutInfo workout={previousWorkout} />
+              )
+            }
           </View>
           <View style={styles.seeMoreSummary}>
             <Text style={styles.generalLabel}>Weekly summary:</Text>
@@ -94,6 +117,12 @@ const styles = StyleSheet.create({
     width: 320,
     paddingBottom: 10,
     backgroundColor: Colors.secondaryColorWithOpacity
+  },
+  lastWorkout: {
+    fontSize: 11,
+    color: Colors.secondaryTextColor,
+    marginTop: 8,
+    fontFamily: Fonts.asapBold
   }
 })
 
