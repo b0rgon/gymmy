@@ -1,28 +1,25 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useContext, useState } from 'react'
-import GymmyLogo from '../../assets/icons/gymmy_logo.png'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { useContext, useState } from 'react'
 import Colors from '../../constants/colors'
-import Fonts, { fontsToLoad } from '../../constants/font_styles'
+import Fonts from '../../constants/font_styles'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
-import axios from 'axios'
-import { Alert } from 'react-native'
 import WeekDays from '../components/page_components/week_days'
 import TodaysWorkout from '../components/page_components/todays_workout'
 import WeeklySummary from '../components/page_components/weekly_summary'
 import mockWorkouts from '../../mock_tests/mockWorkouts'
-import { AuthContext } from '../context/auth_context'
 import WorkoutInfo from '../components/page_components/workout_info'
+import { AuthContext } from '../context/auth_context'
 
 const HomeScreen = () => {
   const [selectedDay, setSelectedDay] = useState(new Date()); // por defeito é a data de hoje.
   const dayString = selectedDay.toLocaleDateString('en-US', { weekday: 'long' })
-  const loggedUser = useContext(AuthContext); // para ter acesso ao utilizador autenticado
+  const { user } = useContext(AuthContext);
+  const userFirstName = user?.name.split(' ')[0] ?? 'undefined'
 
   let selectedDate = selectedDay.toISOString().split('T')[0]
 
   // obter workout do dia selecionado + anteriores:
-
   const workoutBySelectedDay = mockWorkouts.find(w => w.date === selectedDate)
   // ordenar por ordem decrescente de data e guardar o index do mais recente
   const sortedWorkouts = [...mockWorkouts].sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -45,7 +42,7 @@ const HomeScreen = () => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
       <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
         <View style={styles.root}>
-          <Text style={styles.welcomeText}>Welcome, {loggedUser.name ?? 'undefined'}!</Text>
+          <Text style={styles.welcomeText}>Welcome, {userFirstName}!</Text>
           <WeekDays selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
           <Text style={styles.generalLabel}>{selectedDay.getDate() != new Date().getDate() ? dayString : 'Today'}'s workout:</Text>
           <TodaysWorkout todaysWorkout={workoutBySelectedDay} />
@@ -54,8 +51,8 @@ const HomeScreen = () => {
             {previousWorkout ?
               (
                 <TouchableOpacity onPress={() => navigation.navigate('WorkoutLive', { routine: previousWorkout })}>
-                  <WorkoutInfo workout={previousWorkout} />
-                  <Text style={styles.lastWorkout}>Recorded at {previousWorkout.date}</Text>
+                  <WorkoutInfo workout={previousWorkout}
+                    existsPrevWorkout={true} />
                 </TouchableOpacity>
               )
               :
@@ -87,11 +84,11 @@ const styles = StyleSheet.create({
     padding: 70,
   },
   welcomeText: {
-    paddingTop: 30,
-    color: Colors.mainTextColor,
     fontSize: 20,
-    fontFamily: Fonts.quicksandBold,
-    width: 320
+    fontFamily: Fonts.asapBold,
+    color: Colors.mainTextColor,
+    paddingTop: 30,
+    paddingBottom: 10
   },
   generalLabel: {
     paddingTop: 25,
@@ -117,12 +114,6 @@ const styles = StyleSheet.create({
     width: 320,
     paddingBottom: 10,
     backgroundColor: Colors.secondaryColorWithOpacity
-  },
-  lastWorkout: {
-    fontSize: 11,
-    color: Colors.secondaryTextColor,
-    marginTop: 8,
-    fontFamily: Fonts.asapBold
   }
 })
 

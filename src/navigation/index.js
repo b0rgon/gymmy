@@ -23,8 +23,8 @@ const Navigation = () => {
             <Stack.Navigator screenOptions={{
                 headerShown: false,
             }}>
-                {/* <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="SignUp" component={RegisterScreen} /> */}
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="SignUp" component={RegisterScreen} />
                 <Stack.Screen name="Home" component={TabNavigator} />
                 <Stack.Screen name="WorkoutLive" component={WorkoutLive} />
             </Stack.Navigator>

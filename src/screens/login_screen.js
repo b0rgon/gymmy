@@ -18,7 +18,7 @@ const LoginScreen = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
-  const { setUser } = useContext(AuthContext);
+  const { setUser, setToken } = useContext(AuthContext);
 
   function Login() {
     if (!email || !password) {
@@ -31,13 +31,21 @@ const LoginScreen = () => {
       password: password
     }
 
-    axios.post('http://192.168.1.100:3000/login', userData)
+    axios.post('http://192.168.1.104:3000/login', userData)
       .then(res => {
-        console.log(res.data);
+        if (res.data.status === "OK") {
+          const token = res.data.token;
+          setToken(token);
 
-        if (res.data.status == "OK") {
-          setUser(res.data.user); // guarda o utilizador autenticado
-          navigation.navigate('Home');
+          axios.get('http://192.168.1.104:3000/me', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }).then(response => {
+            setUser(response.data.user);
+            navigation.navigate('Home');
+          });
+          
         } else {
           Alert.alert('Error', res.data.data);
         }

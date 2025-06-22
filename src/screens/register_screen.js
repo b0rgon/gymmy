@@ -10,11 +10,14 @@ import DateInput from '../components/inputs/date_input'
 import RadioButtonForm from '../components/inputs/radio_button_form'
 import axios from 'axios'
 import { Alert } from 'react-native'
+import GenderForm from '../components/page_components/gender_form'
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [gender, setGender] = useState('M');
+  const [countryOfBirth, setCountryOfBirth] = useState('M');
 
   // form validation
   const [emailVerify, setEmailVerify] = useState(false);
@@ -99,6 +102,8 @@ const RegisterScreen = () => {
       email: email,
       dateOfBirth: dateOfBirthFixed,
       gymExperience: gymExperience,
+      gender: gender,
+      countryOfBirth: countryOfBirth,
       password: password
     }
 
@@ -160,6 +165,9 @@ const RegisterScreen = () => {
                 year={year}
                 setYear={setYear} />
             </View>
+            <GenderForm
+              gender={gender}
+              setGender={setGender} />
             <RadioButtonForm selectedValue={gymExperience} setSelectedValue={setGymExperience} />
             <DefaultButton buttonText={'Continue'} onPress={() => Register()} />
             <View style={styles.signUpRedirection}>
@@ -192,7 +200,7 @@ const styles = StyleSheet.create({
   },
   root: {
     alignItems: 'center',
-    padding: 70,
+    padding: 30,
   },
   dateOfBirth: {
     flexDirection: 'row',

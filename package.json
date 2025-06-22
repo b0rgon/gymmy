@@ -24,6 +24,7 @@
     "expo-linear-gradient": "~14.1.4",
     "expo-module-scripts": "^4.1.6",
     "expo-status-bar": "~2.2.3",
+    "jwt-decode": "^4.0.0",
     "react": "19.0.0",
     "react-native": "0.79.2",
     "react-native-paper": "^5.14.1",

@@ -1,7 +1,7 @@
 const mockWorkouts = [
     {
         id: 1,
-        date: '2025-06-09',
+        date: '2025-06-16',
         name: 'Push',
         notes: 'Feeling strong today!',
         duration: 54,
@@ -34,7 +34,7 @@ const mockWorkouts = [
     },
     {
         id: 2,
-        date: '2025-06-10',
+        date: '2025-06-17',
         name: 'Pull',
         notes: '',
         duration: 43,
@@ -68,7 +68,7 @@ const mockWorkouts = [
     },
     {
         id: 3,
-        date: '2025-06-12',
+        date: '2025-06-20',
         name: 'Legs',
         notes: 'Hoje treinei pernas.',
         duration: 66,
@@ -102,7 +102,7 @@ const mockWorkouts = [
     },
     {
         id: 4,
-        date: '2025-06-13',
+        date: '2025-06-21',
         name: 'Upper',
         notes: 'upper dayy !!',
         duration: 71,

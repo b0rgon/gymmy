@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Colors from '../../../constants/colors'
-import Fonts, { fontsToLoad } from '../../../constants/font_styles'
+import Fonts from '../../../constants/font_styles'
 
-const WorkoutInfo = ({ workout }) => {
+const WorkoutInfo = ({ workout, existsPrevWorkout = false }) => {
 
     if (workout) {
         return (
@@ -20,6 +20,8 @@ const WorkoutInfo = ({ workout }) => {
                     ))
                 }
                 {workout.duration && <Text style={styles.workoutDuration}>Duration: {workout.duration}min</Text>}
+                {existsPrevWorkout && <Text style={styles.workoutDuration}>Recorded at {workout.date}</Text>}
+
             </View>
         )
     }
