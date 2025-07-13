@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginLeft: 15,
         alignItems: 'center',
+
     },
     label: {
         fontFamily: Fonts.quicksandRegular,

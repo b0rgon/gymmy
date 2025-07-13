@@ -11,13 +11,18 @@ import RadioButtonForm from '../components/inputs/radio_button_form'
 import axios from 'axios'
 import { Alert } from 'react-native'
 import GenderForm from '../components/page_components/gender_form'
+import CountrySelector from '../components/page_components/country_selector'
+import countryList from '../../constants/countries.json'
+import Url from '../../constants/url'
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState('M');
-  const [countryOfBirth, setCountryOfBirth] = useState('M');
+  const [country, setCountry] = useState(null);
+
+  const countries = countryList.map(c => ({ label: c, value: c }));
 
   // form validation
   const [emailVerify, setEmailVerify] = useState(false);
@@ -103,11 +108,11 @@ const RegisterScreen = () => {
       dateOfBirth: dateOfBirthFixed,
       gymExperience: gymExperience,
       gender: gender,
-      countryOfBirth: countryOfBirth,
+      country: country,
       password: password
     }
 
-    axios.post('http://192.168.1.100:3000/register', userData)
+    axios.post(`${Url.endpoint}/register`, userData)
       .then(res => {
         console.log(res.data)
 
@@ -123,7 +128,7 @@ const RegisterScreen = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'handled'}>
       <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
         <View style={styles.root}>
           <Text style={[styles.mainText, { marginTop: 10 }, { marginBottom: 60 }]}>CREATE A NEW ACCOUNT</Text>
@@ -168,6 +173,10 @@ const RegisterScreen = () => {
             <GenderForm
               gender={gender}
               setGender={setGender} />
+            <CountrySelector
+              countries={countries}
+              country={country}
+              setCountry={setCountry} />
             <RadioButtonForm selectedValue={gymExperience} setSelectedValue={setGymExperience} />
             <DefaultButton buttonText={'Continue'} onPress={() => Register()} />
             <View style={styles.signUpRedirection}>

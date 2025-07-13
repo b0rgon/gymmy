@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import axios from 'axios'
 import { Alert } from 'react-native'
 import { AuthContext } from '../context/auth_context';
+import Url from '../../constants/url'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -31,13 +32,13 @@ const LoginScreen = () => {
       password: password
     }
 
-    axios.post('http://192.168.1.104:3000/login', userData)
+    axios.post(`${Url.endpoint}/login`, userData)
       .then(res => {
         if (res.data.status === "OK") {
           const token = res.data.token;
           setToken(token);
 
-          axios.get('http://192.168.1.104:3000/me', {
+          axios.get(`${Url.endpoint}/me`, {
             headers: {
               Authorization: `Bearer ${token}`,
             }
