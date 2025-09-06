@@ -2,25 +2,32 @@ import { View, Text, Button, StyleSheet, useWindowDimensions, Platform, ScrollVi
 import React, { useState } from 'react'
 import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
-import CustomInput from '../components/custom_input'
-import DefaultButton from '../components/default_button'
+import CustomInput from '../components/inputs/custom_input'
+import DefaultButton from '../components/buttons/default_button'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
-import DateInput from '../components/date_input'
-import RadioButtonForm from '../components/radio_button_form'
+import DateInput from '../components/inputs/date_input'
+import RadioButtonForm from '../components/inputs/radio_button_form'
 import axios from 'axios'
 import { Alert } from 'react-native'
+import GenderForm from '../components/page_components/gender_form'
+import CountrySelector from '../components/page_components/country_selector'
+import countryList from '../../constants/countries.json'
+import Url from '../../constants/url'
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [gender, setGender] = useState('M');
+  const [country, setCountry] = useState(null);
+
+  const countries = countryList.map(c => ({ label: c, value: c }));
 
   // form validation
   const [emailVerify, setEmailVerify] = useState(false);
   const [nameVerify, setNameVerify] = useState(false);
   const [passwordVerify, setPasswordVerify] = useState(false);
-  const [yearVerify, setYearVerify] = useState(false);
 
   // dob variables:
   const [day, setDay] = useState('');
@@ -100,10 +107,12 @@ const RegisterScreen = () => {
       email: email,
       dateOfBirth: dateOfBirthFixed,
       gymExperience: gymExperience,
+      gender: gender,
+      country: country,
       password: password
     }
 
-    axios.post('http://192.168.1.100:3000/register', userData)
+    axios.post(`${Url.endpoint}/register`, userData)
       .then(res => {
         console.log(res.data)
 
@@ -119,7 +128,7 @@ const RegisterScreen = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'always'}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps={'handled'}>
       <LinearGradient style={styles.container} colors={Colors.backgroundColor}>
         <View style={styles.root}>
           <Text style={[styles.mainText, { marginTop: 10 }, { marginBottom: 60 }]}>CREATE A NEW ACCOUNT</Text>
@@ -161,6 +170,13 @@ const RegisterScreen = () => {
                 year={year}
                 setYear={setYear} />
             </View>
+            <GenderForm
+              gender={gender}
+              setGender={setGender} />
+            <CountrySelector
+              countries={countries}
+              country={country}
+              setCountry={setCountry} />
             <RadioButtonForm selectedValue={gymExperience} setSelectedValue={setGymExperience} />
             <DefaultButton buttonText={'Continue'} onPress={() => Register()} />
             <View style={styles.signUpRedirection}>
@@ -193,7 +209,7 @@ const styles = StyleSheet.create({
   },
   root: {
     alignItems: 'center',
-    padding: 70,
+    padding: 30,
   },
   dateOfBirth: {
     flexDirection: 'row',

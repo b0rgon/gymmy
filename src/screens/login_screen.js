@@ -1,15 +1,17 @@
 import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import GymmyLogo from '../../assets/icons/gymmy_logo.png'
 import Colors from '../../constants/colors'
 import Fonts from '../../constants/font_styles'
-import CustomInput from '../components/custom_input'
+import CustomInput from '../components/inputs/custom_input'
 import CheckBox from 'expo-checkbox';
-import DefaultButton from '../components/default_button'
+import DefaultButton from '../components/buttons/default_button'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import axios from 'axios'
 import { Alert } from 'react-native'
+import { AuthContext } from '../context/auth_context';
+import Url from '../../constants/url'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +19,7 @@ const LoginScreen = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const { height } = useWindowDimensions();
   const navigation = useNavigation();
+  const { setUser, setToken } = useContext(AuthContext);
 
   function Login() {
     if (!email || !password) {
@@ -29,12 +32,21 @@ const LoginScreen = () => {
       password: password
     }
 
-    axios.post('http://192.168.1.100:3000/login', userData)
+    axios.post(`${Url.endpoint}/login`, userData)
       .then(res => {
-        console.log(res.data);
+        if (res.data.status === "OK") {
+          const token = res.data.token;
+          setToken(token);
 
-        if (res.data.status == "OK") {
-          navigation.navigate('Home');
+          axios.get(`${Url.endpoint}/me`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }).then(response => {
+            setUser(response.data.user);
+            navigation.navigate('Home');
+          });
+          
         } else {
           Alert.alert('Error', res.data.data);
         }

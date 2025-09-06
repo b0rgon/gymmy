@@ -1,15 +1,15 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
-import Colors from '../../constants/colors'
-import Fonts from '../../constants/font_styles'
+import Colors from '../../../constants/colors'
+import Fonts from '../../../constants/font_styles'
 
 // 'Login', 'Continue' (signup) and 'Add exercise'
 
 const DefaultButton = ({ onPress, buttonText }) => {
     return (
-        <Pressable onPress={onPress} style={styles.container}>
+        <TouchableOpacity onPress={onPress} style={styles.container}>
             <Text style={styles.text}>{buttonText}</Text>
-        </Pressable>
+        </TouchableOpacity>
     )
 }
 
